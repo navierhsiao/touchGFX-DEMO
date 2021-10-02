@@ -1,0 +1,36 @@
+{
+
+    "version": "0.2.0",
+    "configurations": [       
+        {
+            "name": "CortexDebug",
+            "type": "cortex-debug",
+            "request": "launch",
+            "runToMain": true,
+            "servertype": "stlink",
+            "cwd": "${workspaceRoot}",
+            "executable": "build/touchGFX_DEMO.elf",
+            //"svdFile": "STM32F7x6.svd",
+            "interface": "swd",
+            "serverArgs": [
+                "-el",
+                "C:/Program Files (x86)/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin/ExternalLoader/MT25TL01G_STM32H747I-DISCO.stldr"
+            ],
+        },
+        {
+            "name": "macos-debug",
+            "type": "cortex-debug",
+            "request": "launch",
+            "runToMain": true,
+            "servertype": "stlink",
+            "cwd": "${workspaceRoot}",
+            "executable": "build/touchGFX_DEMO.elf",
+            //"svdFile": "STM32F7x6.svd",
+            "interface": "swd",
+            "serverArgs": [
+                "-el",
+                "/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin/ExternalLoader/MT25TL01G_STM32H747I-DISCO.stldr"
+            ],
+        }
+    ]
+}
