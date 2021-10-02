@@ -126,12 +126,12 @@ C_INCLUDES =  $(addprefix -I, $(INC))
 CPP_INCLUDES = $(C_INCLUDES)
 
 # compile gcc flags
-ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections 
+ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -w -fdata-sections -ffunction-sections 
 
-CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -w -fdata-sections -ffunction-sections
 CFLAGS += --specs=nosys.specs
 
-CPPFLAGS = $(MCU) $(C_DEFS) $(CPP_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections -std=gnu++14 -fno-rtti
+CPPFLAGS = $(MCU) $(C_DEFS) $(CPP_INCLUDES) $(OPT) -w -fdata-sections -ffunction-sections -std=gnu++14 -fno-rtti
 CPPFLAGS += --specs=nosys.specs
 
 ifeq ($(DEBUG), 1)
@@ -155,6 +155,7 @@ LIBS = -lc -lm -lnosys
 LIBS += Libraries/Touchgfx/lib/core/cortex_m7/gcc/libtouchgfx-float-abi-hard.a
 LIBS += Libraries/CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a
 LIBDIR =
+
 LDFLAGS = $(MCU) -specs=nano.specs -specs=nosys.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections 
 LDFLAGS += -u _printf_float -std=gnu++14 -fno-rtti -lstdc++ -lsupc++ -static
 # default action: build all
@@ -189,7 +190,7 @@ $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 	@$(AS) -c $(CFLAGS) $< -o $@
 
 $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
-	@echo "LD $<" 
+	@echo "Link all objects ..." 
 	@$(CPP) $(OBJECTS) $(LDFLAGS) -o $@
 	$(SZ) $@
 

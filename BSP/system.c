@@ -11,7 +11,7 @@
 #define HSEM_ID_0 (0U) /* HW semaphore 0*/
 #endif
 
-
+static CRC_HandleTypeDef hcrc;
 static ADC_HandleTypeDef    AdcHandle;
 static void SystemClock_Config(void);
 static void MPU_Config(void);
@@ -209,13 +209,13 @@ static void CPU_CACHE_Enable(void)
 static void CRC_Init(void)
 {
   __HAL_RCC_CRC_CLK_DISABLE();
-  CRC_HandleTypeDef hcrc;
+  
   hcrc.Instance = CRC;
   hcrc.Init.DefaultPolynomialUse = DEFAULT_POLYNOMIAL_ENABLE;
   hcrc.Init.DefaultInitValueUse = DEFAULT_INIT_VALUE_ENABLE;
   hcrc.Init.InputDataInversionMode = CRC_INPUTDATA_INVERSION_NONE;
   hcrc.Init.OutputDataInversionMode = CRC_OUTPUTDATA_INVERSION_DISABLE;
-  hcrc.InputDataFormat = CRC_INPUTDATA_FORMAT_BYTES;
+  hcrc.InputDataFormat = CRC_INPUTDATA_FORMAT_WORDS;
   if (HAL_CRC_Init(&hcrc) != HAL_OK)
   {
     Error_Handler(__FILE__, __LINE__);
