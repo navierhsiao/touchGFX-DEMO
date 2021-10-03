@@ -10,9 +10,9 @@
 #define HSYNC           1
 #define HBP             1
 #define HFP             1
-#define HACT            800
+#define HACT            400
 
-#define Xsize           800
+#define Xsize           400
 #define Ysize           480
 
 typedef struct ltdc_dsi_structDef

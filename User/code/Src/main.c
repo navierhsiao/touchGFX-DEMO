@@ -16,8 +16,8 @@ const osThreadAttr_t defaultTask_attributes = {
 
 const osThreadAttr_t TouchGFXTask_attributes = {
   .name = "TouchGFXTask",
-  .stack_size = 3048*4,
-  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 4048,
+  .priority = ( tskIDLE_PRIORITY + 3 ),
 };
 
 uint32_t __attribute__((section (".ExtFlashSection")))test_array[200];
