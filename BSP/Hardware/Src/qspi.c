@@ -10,7 +10,7 @@ void QSPI_Read_Data_DMA(QSPI_objectTypeDef *object,uint8_t *reg);
 void QSPI_Auto_Polling(QSPI_objectTypeDef *object,QSPI_CommandTypeDef *cmd,QSPI_AutoPollingTypeDef *cofig);
 void QSPI_MemoryMapped(QSPI_objectTypeDef *object,QSPI_CommandTypeDef *cmd,QSPI_MemoryMappedTypeDef *config);
 
-QSPI_objectTypeDef  *QSPI_object_Init(QSPI_objectAttr attr)
+QSPI_objectTypeDef *QSPI_object_Init(QSPI_objectAttr attr)
 {
     qspi_object_temp.qspi_init=QSPI_Init;
     qspi_object_temp.qspi_writeCmd=QSPI_Write_Command;
@@ -69,16 +69,16 @@ void HAL_QSPI_MspInit(QSPI_HandleTypeDef* hqspi)
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOD_CLK_ENABLE();
     /**QUADSPI GPIO Configuration
-    PG9     ------> QUADSPI_BK2_IO2
-    PG14     ------> QUADSPI_BK2_IO3
-    PG6     ------> QUADSPI_BK1_NCS
-    PF6     ------> QUADSPI_BK1_IO3
-    PF7     ------> QUADSPI_BK1_IO2
+    PD11    ------> QUADSPI_BK1_IO0
     PF9     ------> QUADSPI_BK1_IO1
+    PF7     ------> QUADSPI_BK1_IO2
+    PF6     ------> QUADSPI_BK1_IO3
+    PG6     ------> QUADSPI_BK1_NCS
     PH2     ------> QUADSPI_BK2_IO0
     PH3     ------> QUADSPI_BK2_IO1
+    PG9     ------> QUADSPI_BK2_IO2
+    PG14    ------> QUADSPI_BK2_IO3
     PB2     ------> QUADSPI_CLK
-    PD11     ------> QUADSPI_BK1_IO0
     */
     GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_14;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;

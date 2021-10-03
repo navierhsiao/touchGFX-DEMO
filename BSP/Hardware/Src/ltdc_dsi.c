@@ -59,14 +59,14 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
 
   //  DMA2D Init
 
-  // object->hdma2d.Instance=DMA2D;
-  // object->hdma2d.Init.Mode = DMA2D_M2M;
-  // object->hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB888;
-  // object->hdma2d.Init.OutputOffset = 0;
-  // if (HAL_DMA2D_Init(&object->hdma2d) != HAL_OK)
-  // {
-  //   Error_Handler(__FILE__, __LINE__);
-  // }
+  object->hdma2d.Instance=DMA2D;
+  object->hdma2d.Init.Mode = DMA2D_R2M;
+  object->hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB888;
+  object->hdma2d.Init.OutputOffset = 0;
+  if (HAL_DMA2D_Init(&object->hdma2d) != HAL_OK)
+  {
+    Error_Handler(__FILE__, __LINE__);
+  }
 
   //  DSI HOST Init
 
@@ -370,28 +370,6 @@ void copy_buffer_R2M(ltdc_dsi_objectTypeDef *object,uint32_t *dst,uint16_t xsize
     }
   }   
 }
-
-// void HAL_DSI_TearingEffectCallback(DSI_HandleTypeDef* hdsi)
-// {
-
-// }
-
-// void HAL_DSI_EndOfRefreshCallback(DSI_HandleTypeDef *hdsi)
-// {
-  // if(pend_buffer >= 0)
-  // { 
-  // /* Disable DSI Wrapper */
-  //   __HAL_DSI_WRAPPER_DISABLE(hdsi);
-  //   /* Update LTDC configuaration */
-  //   LTDC_LAYER(hdsi, 0)->CFBAR = ((uint32_t)Buffers[pend_buffer]);
-  //   __HAL_LTDC_RELOAD_CONFIG(&object_temp->hltdc);
-  //   /* Enable DSI Wrapper */
-  //   __HAL_DSI_WRAPPER_ENABLE(hdsi);
-    
-  //   front_buffer = pend_buffer;  
-  //   pend_buffer = -1;
-  // }
-// }
 
 void DSI_IO_WRITE(ltdc_dsi_objectTypeDef *object,uint16_t chNbr, uint16_t reg, uint8_t* data, uint16_t size)
 {

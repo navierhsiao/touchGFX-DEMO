@@ -20,8 +20,6 @@
 
 #define LED1_TOGGLE HAL_GPIO_TogglePin(GPIOI,GPIO_PIN_12)
 
-extern lcd_objectTypeDef otm8009a_obj;
-
 void Hardware_Init(void);
 void Error_Handler(char *file, uint32_t line);
 

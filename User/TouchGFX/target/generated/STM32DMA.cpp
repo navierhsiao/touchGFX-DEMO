@@ -35,6 +35,8 @@ typedef struct
     const uint32_t* const data;
 } clutData_t;
 
+extern "C" lcd_objectTypeDef otm8009a_obj;
+
 extern "C" {
     static void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle)
     {

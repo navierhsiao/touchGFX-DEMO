@@ -381,11 +381,10 @@ uint32_t TEMP_SENSOR_Stop(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  if (htim->Instance == TIM2) {
+  if (htim->Instance == TIM6) {
     HAL_IncTick();
   }
 }
-
 
 void Error_Handler(char *file, uint32_t line)
 {

@@ -41,7 +41,7 @@ volatile bool displayRefreshing = false;
 volatile bool refreshRequested = true;
 static int updateRegion = 0;
 static uint16_t* currFbBase = 0;
-
+extern "C" lcd_objectTypeDef otm8009a_obj;
 /* USER CODE END private variables */
 
 /* USER CODE BEGIN private functions */
