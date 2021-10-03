@@ -20,6 +20,7 @@ const osThreadAttr_t TouchGFXTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
 };
 
+uint32_t __attribute__((section (".ExtFlashSection")))test_array[200];
 void StartDefaultTask(void *argument);
 void TouchGFX_Task(void *argument);
 
@@ -43,7 +44,8 @@ void StartDefaultTask(void *argument)
   uint8_t count=0;
   for(;;)
   {
-    osDelay(1000);
+    LED1_TOGGLE;
+    osDelay(500);
   }
   /* USER CODE END 5 */
 }
