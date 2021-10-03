@@ -20,7 +20,6 @@ const osThreadAttr_t TouchGFXTask_attributes = {
   .priority = ( tskIDLE_PRIORITY + 3 ),
 };
 
-uint32_t __attribute__((section (".ExtFlashSection")))test_array[200];
 void StartDefaultTask(void *argument);
 void TouchGFX_Task(void *argument);
 

@@ -12,12 +12,6 @@
 **************************************************************************************
 */
 
-static const uint32_t Buffers[] = 
-{
-  LCD_FRAME_BUFFER,
-  LCD_FRAME_BUFFER + (800*480*4),  
-};
-
 ltdc_dsi_objectTypeDef *object_temp;
 void DSI_IO_WRITE(ltdc_dsi_objectTypeDef *object,uint16_t chNbr, uint16_t reg, uint8_t* data, uint16_t size);
 void DSI_IO_READ(ltdc_dsi_objectTypeDef *object,uint16_t chNbr, uint16_t reg, uint8_t* data, uint16_t size);
@@ -166,6 +160,7 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   {
     Error_Handler(__FILE__, __LINE__);
   }
+  __HAL_LTDC_DISABLE(&object->hltdc);
 
   HAL_DSI_Start(&object->hdsi);
 
@@ -174,7 +169,7 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   pLayerCfg.WindowX1 = Xsize;
   pLayerCfg.WindowY0 = 0;
   pLayerCfg.WindowY1 = Ysize;
-  pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
+  pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB888;
   pLayerCfg.Alpha = 255;
   pLayerCfg.Alpha0 = 0;
   pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
@@ -210,7 +205,7 @@ void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef* hdma2d)
   {
     __HAL_RCC_DMA2D_CLK_ENABLE();
     /* DMA2D interrupt Init */
-    HAL_NVIC_SetPriority(DMA2D_IRQn, 7, 0);
+    HAL_NVIC_SetPriority(DMA2D_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(DMA2D_IRQn);
   }
 }
@@ -257,7 +252,7 @@ void HAL_DSI_MspInit(DSI_HandleTypeDef* hdsi)
 
     HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_12, GPIO_PIN_RESET);
     /* DSI interrupt Init */
-    HAL_NVIC_SetPriority(DSI_IRQn, 7, 0);
+    HAL_NVIC_SetPriority(DSI_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(DSI_IRQn);
   }
 }
@@ -275,7 +270,7 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* hltdc)
     PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
     PeriphClkInitStruct.PLL3.PLL3P = 2;
     PeriphClkInitStruct.PLL3.PLL3Q = 2;  
-    PeriphClkInitStruct.PLL3.PLL3R = 19;
+    PeriphClkInitStruct.PLL3.PLL3R = 21;
     PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
     PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_2;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
@@ -286,7 +281,7 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* hltdc)
     /* Peripheral clock enable */
     __HAL_RCC_LTDC_CLK_ENABLE();
     /* LTDC interrupt Init */
-    HAL_NVIC_SetPriority(LTDC_IRQn, 7, 0);
+    HAL_NVIC_SetPriority(LTDC_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(LTDC_IRQn);
   }
 

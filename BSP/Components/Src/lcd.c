@@ -343,6 +343,11 @@ void lcd_init(lcd_objectTypeDef *object,uint32_t colorCoding,uint32_t orientatio
   
   HAL_DSI_ConfigFlowControl(&object->dsi_object.hdsi, DSI_FLOW_CONTROL_BTA);
   HAL_DSI_ForceRXLowPower(&object->dsi_object.hdsi, ENABLE);  
+
+  HAL_LTDC_SetPitch(&object->dsi_object.hltdc, 800, 0);
+
+    /* Finally enable the LTDC IP */
+    __HAL_LTDC_ENABLE(&object->dsi_object.hltdc);
 }
 /*
 *********************************************************************************************
