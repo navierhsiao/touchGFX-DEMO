@@ -29,31 +29,30 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   LTDC_LayerCfgTypeDef pLayerCfg = {0};
 
   object_temp=object;
-  object->pend_buffer=-1;
 
-  __HAL_RCC_LTDC_CLK_ENABLE();
+  // __HAL_RCC_LTDC_CLK_ENABLE();
 
-  /** @brief Toggle Sw reset of LTDC IP */
-  __HAL_RCC_LTDC_FORCE_RESET();
-  __HAL_RCC_LTDC_RELEASE_RESET();
+  // /** @brief Toggle Sw reset of LTDC IP */
+  // __HAL_RCC_LTDC_FORCE_RESET();
+  // __HAL_RCC_LTDC_RELEASE_RESET();
 
-  /** @brief Enable the DMA2D clock */
-  __HAL_RCC_DMA2D_CLK_ENABLE();
+  // /** @brief Enable the DMA2D clock */
+  // __HAL_RCC_DMA2D_CLK_ENABLE();
 
-  /** @brief Toggle Sw reset of DMA2D IP */
-  __HAL_RCC_DMA2D_FORCE_RESET();
-  __HAL_RCC_DMA2D_RELEASE_RESET();
+  // /** @brief Toggle Sw reset of DMA2D IP */
+  // __HAL_RCC_DMA2D_FORCE_RESET();
+  // __HAL_RCC_DMA2D_RELEASE_RESET();
 
-  /** @brief Enable DSI Host and wrapper clocks */
-  __HAL_RCC_DSI_CLK_ENABLE();
+  // /** @brief Enable DSI Host and wrapper clocks */
+  // __HAL_RCC_DSI_CLK_ENABLE();
 
-  /** @brief Soft Reset the DSI Host and wrapper */
-  __HAL_RCC_DSI_FORCE_RESET();
-  __HAL_RCC_DSI_RELEASE_RESET();
+  // /** @brief Soft Reset the DSI Host and wrapper */
+  // __HAL_RCC_DSI_FORCE_RESET();
+  // __HAL_RCC_DSI_RELEASE_RESET();
 
   //  DMA2D Init
 
-  object->hdma2d.Instance=DMA2D;
+  object->hdma2d.Instance = DMA2D;
   object->hdma2d.Init.Mode = DMA2D_R2M;
   object->hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB888;
   object->hdma2d.Init.OutputOffset = 0;
@@ -73,7 +72,7 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   object->hdsi.Init.AutomaticClockLaneControl = DSI_AUTO_CLK_LANE_CTRL_DISABLE;
   object->hdsi.Init.TXEscapeCkdiv = 4;
   object->hdsi.Init.NumberOfLanes = DSI_TWO_DATA_LANES;
-  PLLInit.PLLNDIV = 100;
+  PLLInit.PLLNDIV = 99;
   PLLInit.PLLIDF = DSI_PLL_IN_DIV5;
   PLLInit.PLLODF = DSI_PLL_OUT_DIV1;
   if (HAL_DSI_Init(&object->hdsi, &PLLInit) != HAL_OK)
@@ -93,12 +92,12 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   {
     Error_Handler(__FILE__, __LINE__);
   }
-  PhyTimings.ClockLaneHS2LPTime = 35;
-  PhyTimings.ClockLaneLP2HSTime = 35;
-  PhyTimings.DataLaneHS2LPTime = 35;
-  PhyTimings.DataLaneLP2HSTime = 35;
+  PhyTimings.ClockLaneHS2LPTime = 28;
+  PhyTimings.ClockLaneLP2HSTime = 33;
+  PhyTimings.DataLaneHS2LPTime = 15;
+  PhyTimings.DataLaneLP2HSTime = 25;
   PhyTimings.DataLaneMaxReadTime = 0;
-  PhyTimings.StopWaitTime = 10;
+  PhyTimings.StopWaitTime = 0;
   if (HAL_DSI_ConfigPhyTimer(&object->hdsi, &PhyTimings) != HAL_OK)
   {
     Error_Handler(__FILE__, __LINE__);
@@ -125,9 +124,9 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   CmdCfg.DEPolarity            = DSI_DATA_ENABLE_ACTIVE_HIGH;
   CmdCfg.ColorCoding           = DSI_RGB888;
   CmdCfg.CommandSize           = HACT;
-  CmdCfg.TearingEffectSource   = DSI_TE_DSILINK;
+  CmdCfg.TearingEffectSource   = DSI_TE_EXTERNAL;
   CmdCfg.TearingEffectPolarity = DSI_TE_RISING_EDGE;
-  CmdCfg.VSyncPol              = DSI_VSYNC_FALLING;
+  CmdCfg.VSyncPol              = DSI_VSYNC_RISING;
   CmdCfg.AutomaticRefresh      = DSI_AR_DISABLE;
   CmdCfg.TEAcknowledgeRequest  = DSI_TE_ACKNOWLEDGE_ENABLE;
   if (HAL_DSI_ConfigAdaptedCommandMode(&object->hdsi, &CmdCfg) != HAL_OK)
@@ -141,8 +140,8 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
 
   //  LTDC init
   object->hltdc.Instance = LTDC;
-  object->hltdc.Init.HSPolarity = LTDC_HSPOLARITY_AL;
-  object->hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;
+  object->hltdc.Init.HSPolarity = LTDC_HSPOLARITY_AH;
+  object->hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AH;
   object->hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;
   object->hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
   object->hltdc.Init.HorizontalSync = HSYNC;
@@ -164,7 +163,7 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
 
   HAL_DSI_Start(&object->hdsi);
 
-  __HAL_DSI_WRAPPER_DISABLE(&object->hdsi);
+  // __HAL_DSI_WRAPPER_DISABLE(&object->hdsi);
   pLayerCfg.WindowX0 = 0;
   pLayerCfg.WindowX1 = Xsize;
   pLayerCfg.WindowY0 = 0;
@@ -185,7 +184,7 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
     Error_Handler(__FILE__, __LINE__);
   }
 
-  __HAL_DSI_WRAPPER_ENABLE(&object->hdsi);
+  // __HAL_DSI_WRAPPER_ENABLE(&object->hdsi);
   /* USER CODE BEGIN LTDC_Init 2 */
   
   /* Configure DSI PHY HS2LP and LP2HS timings */
@@ -245,12 +244,6 @@ void HAL_DSI_MspInit(DSI_HandleTypeDef* hdsi)
     GPIO_InitStruct.Alternate = GPIO_AF13_DSI;
     HAL_GPIO_Init(GPIOJ, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(GPIOJ, &GPIO_InitStruct); 
-
-    HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_12, GPIO_PIN_RESET);
     /* DSI interrupt Init */
     HAL_NVIC_SetPriority(DSI_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(DSI_IRQn);

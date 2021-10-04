@@ -340,9 +340,6 @@ void lcd_init(lcd_objectTypeDef *object,uint32_t colorCoding,uint32_t orientatio
   LPCmd.LPDcsShortReadNoP     = DSI_LP_DSR0P_DISABLE;
   LPCmd.LPDcsLongWrite        = DSI_LP_DLW_DISABLE;
   HAL_DSI_ConfigCommand(&object->dsi_object.hdsi, &LPCmd);
-  
-  HAL_DSI_ConfigFlowControl(&object->dsi_object.hdsi, DSI_FLOW_CONTROL_BTA);
-  HAL_DSI_ForceRXLowPower(&object->dsi_object.hdsi, ENABLE);  
 
   HAL_LTDC_SetPitch(&object->dsi_object.hltdc, 800, 0);
 

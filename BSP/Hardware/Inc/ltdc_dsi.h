@@ -3,12 +3,12 @@
 
 #define LCD_FRAME_BUFFER        0xD0000000
 
-#define VSYNC           1
-#define VBP             1
+#define VSYNC           0
+#define VBP             2
 #define VFP             1
 #define VACT            480
-#define HSYNC           1
-#define HBP             1
+#define HSYNC           0
+#define HBP             2
 #define HFP             1
 #define HACT            400
 
