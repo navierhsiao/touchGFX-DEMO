@@ -46,9 +46,12 @@ bool STM32TouchController::sampleTouch(int32_t& x, int32_t& y)
     if (touch_object.chip_id!=0)
     {
         touch_object.touch_scanState(&touch_object);
-        x = touch_object.x[0];
-        y = touch_object.y[0];
-        return true;
+        if(touch_object.touch_state)
+        {
+            x = touch_object.x[0];
+            y = 480-touch_object.y[0];
+            return true;   
+        }
     }
     return false;
 }
