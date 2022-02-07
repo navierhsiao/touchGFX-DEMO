@@ -28,7 +28,7 @@ touch_objectTypeDef touch_object;
 
 void STM32TouchController::init()
 {
-    touch_object_init(&touch_object,OTM8009A_ORIENTATION_LANDSCAPE);
+    touch_object_init(&touch_object,0);
 }
 
 bool STM32TouchController::sampleTouch(int32_t& x, int32_t& y)
@@ -49,7 +49,7 @@ bool STM32TouchController::sampleTouch(int32_t& x, int32_t& y)
         if(touch_object.touch_state)
         {
             x = touch_object.x[0];
-            y = 480-touch_object.y[0];
+            y = touch_object.y[0];
             return true;   
         }
     }

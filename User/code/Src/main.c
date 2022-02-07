@@ -26,6 +26,7 @@ void TouchGFX_Task(void *argument);
 int main(void)
 {
   Hardware_Init();
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
   MX_TouchGFX_Init();
 
   osKernelInitialize();
@@ -41,9 +42,11 @@ void StartDefaultTask(void *argument)
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
   uint8_t count=0;
+
+  HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_12, GPIO_PIN_SET);
   for(;;)
   {
-    LED1_TOGGLE;
+    // LED1_TOGGLE;
     osDelay(500);
   }
   /* USER CODE END 5 */

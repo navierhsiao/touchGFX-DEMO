@@ -41,7 +41,7 @@ volatile bool displayRefreshing = false;
 volatile bool refreshRequested = true;
 static int updateRegion = 0;
 static uint16_t* currFbBase = 0;
-extern "C" lcd_objectTypeDef otm8009a_obj;
+extern "C" lcd_objectTypeDef lcd_obj;
 /* USER CODE END private variables */
 
 /* USER CODE BEGIN private functions */
@@ -138,7 +138,7 @@ void TouchGFXHAL::taskEntry()
 
     /* USER CODE BEGIN taskEntry step 3 */
     /* Enable the LCD, Send Display on DCS command to display */
-    HAL_DSI_ShortWrite(&otm8009a_obj.dsi_object.hdsi, LCD_OTM8009A_ID, DSI_DCS_SHORT_PKT_WRITE_P1, OTM8009A_CMD_DISPON, 0x00);
+    HAL_DSI_ShortWrite(&lcd_obj.dsi_object.hdsi, 0, DSI_DCS_SHORT_PKT_WRITE_P1, 0x29, 0x00);
     /* USER CODE END taskEntry step 3 */
 
     for (;;)
@@ -263,10 +263,10 @@ void TouchGFXHAL::enableLCDControllerInterrupt()
 
     /* USER CODE BEGIN enableLCDControllerInterrupt */
     LCD_ReqTear();
-    __HAL_DSI_CLEAR_FLAG(&otm8009a_obj.dsi_object.hdsi, DSI_IT_ER);
-    __HAL_DSI_CLEAR_FLAG(&otm8009a_obj.dsi_object.hdsi, DSI_IT_TE);
-    __HAL_DSI_ENABLE_IT(&otm8009a_obj.dsi_object.hdsi, DSI_IT_TE);
-    __HAL_DSI_ENABLE_IT(&otm8009a_obj.dsi_object.hdsi, DSI_IT_ER);
+    __HAL_DSI_CLEAR_FLAG(&lcd_obj.dsi_object.hdsi, DSI_IT_ER);
+    __HAL_DSI_CLEAR_FLAG(&lcd_obj.dsi_object.hdsi, DSI_IT_TE);
+    __HAL_DSI_ENABLE_IT(&lcd_obj.dsi_object.hdsi, DSI_IT_TE);
+    __HAL_DSI_ENABLE_IT(&lcd_obj.dsi_object.hdsi, DSI_IT_ER);
     LTDC->IER = 3; /* Enable line and FIFO underrun interrupts */
     /* USER CODE END enableLCDControllerInterrupt */
 }
@@ -309,8 +309,8 @@ extern "C" {
         ScanLineParams[0] = scanline >> 8;
         ScanLineParams[1] = scanline & 0x00FF;
 
-        HAL_DSI_LongWrite(&otm8009a_obj.dsi_object.hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 2, 0x44, ScanLineParams);
-        HAL_DSI_ShortWrite(&otm8009a_obj.dsi_object.hdsi, 0, DSI_DCS_SHORT_PKT_WRITE_P1, OTM8009A_CMD_TEEON, 0x00);
+        HAL_DSI_LongWrite(&lcd_obj.dsi_object.hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 2, 0x44, ScanLineParams);
+        HAL_DSI_ShortWrite(&lcd_obj.dsi_object.hdsi, 0, DSI_DCS_SHORT_PKT_WRITE_P1, 0x35, 0x00);
     }
 
     /**
@@ -326,34 +326,34 @@ extern "C" {
             firstRefreshRequested = true;
 
             /* Send Display on DCS Command to display */
-            HAL_DSI_ShortWrite(&(otm8009a_obj.dsi_object.hdsi),
+            HAL_DSI_ShortWrite(&(lcd_obj.dsi_object.hdsi),
                                0,
                                DSI_DCS_SHORT_PKT_WRITE_P1,
-                               OTM8009A_CMD_DISPON,
+                               0x29,
                                0x00);
         }
     }
 
     void LCD_SetUpdateRegion(int idx)
     {
-        HAL_DSI_LongWrite(&otm8009a_obj.dsi_object.hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 4, OTM8009A_CMD_CASET, pCols[idx]);
+        HAL_DSI_LongWrite(&lcd_obj.dsi_object.hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 4, 0x2A, pCols[idx]);
     }
 
     void LCD_SetUpdateRegionLeft()
     {
-        HAL_DSI_LongWrite(&otm8009a_obj.dsi_object.hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 4, OTM8009A_CMD_CASET, pColLeft);
+        HAL_DSI_LongWrite(&lcd_obj.dsi_object.hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 4, 0x2A, pColLeft);
     }
 
     void LCD_SetUpdateRegionRight()
     {
-        HAL_DSI_LongWrite(&otm8009a_obj.dsi_object.hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 4, OTM8009A_CMD_CASET, pColRight);
+        HAL_DSI_LongWrite(&lcd_obj.dsi_object.hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 4, 0x2A, pColRight);
     }
 
     void LCD_SetBrightness(int value)
     {
-        HAL_DSI_ShortWrite(&otm8009a_obj.dsi_object.hdsi,
-                           0, DSI_DCS_SHORT_PKT_WRITE_P1,
-                           OTM8009A_CMD_WRDISBV, (uint16_t)(value * 255) / 100);
+        // HAL_DSI_ShortWrite(&lcd_obj.dsi_object.hdsi,
+        //                    0, DSI_DCS_SHORT_PKT_WRITE_P1,
+        //                    OTM8009A_CMD_WRDISBV, (uint16_t)(value * 255) / 100);
     }
 
     void HAL_DSI_TearingEffectCallback(DSI_HandleTypeDef* hdsi)
@@ -394,8 +394,8 @@ extern "C" {
 
                 // If we transferred the left half, also transfer right half.
                 __HAL_DSI_WRAPPER_DISABLE(hdsi);
-                LTDC_LAYER(&otm8009a_obj.dsi_object.hltdc, 0)->CFBAR = ((uint32_t)currFbBase) + (HAL::FRAME_BUFFER_WIDTH / 2) * 3;
-                __HAL_LTDC_RELOAD_IMMEDIATE_CONFIG(&otm8009a_obj.dsi_object.hltdc);
+                LTDC_LAYER(&lcd_obj.dsi_object.hltdc, 0)->CFBAR = ((uint32_t)currFbBase) + (HAL::FRAME_BUFFER_WIDTH / 2) * 3;
+                __HAL_LTDC_RELOAD_IMMEDIATE_CONFIG(&lcd_obj.dsi_object.hltdc);
                 __HAL_DSI_WRAPPER_ENABLE(hdsi);
 
                 LCD_SetUpdateRegionRight(); //Set display column to 400-799
@@ -406,8 +406,8 @@ extern "C" {
             {
                 // Otherwise we are done refreshing.
                 __HAL_DSI_WRAPPER_DISABLE(hdsi);
-                LTDC_LAYER(&otm8009a_obj.dsi_object.hltdc, 0)->CFBAR = (uint32_t)currFbBase;
-                __HAL_LTDC_RELOAD_IMMEDIATE_CONFIG(&otm8009a_obj.dsi_object.hltdc);
+                LTDC_LAYER(&lcd_obj.dsi_object.hltdc, 0)->CFBAR = (uint32_t)currFbBase;
+                __HAL_LTDC_RELOAD_IMMEDIATE_CONFIG(&lcd_obj.dsi_object.hltdc);
                 __HAL_DSI_WRAPPER_ENABLE(hdsi);
 
                 GPIO::clear(GPIO::VSYNC_FREQ);

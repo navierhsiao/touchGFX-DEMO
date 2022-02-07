@@ -35,7 +35,7 @@ typedef struct
     const uint32_t* const data;
 } clutData_t;
 
-extern "C" lcd_objectTypeDef otm8009a_obj;
+extern "C" lcd_objectTypeDef lcd_obj;
 
 extern "C" {
     static void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle)
@@ -64,7 +64,7 @@ void STM32H7DMA::initialize()
     __HAL_RCC_DMA2D_RELEASE_RESET();
 
     /* Add transfer complete callback function */
-    otm8009a_obj.dsi_object.hdma2d.XferCpltCallback = DMA2D_XferCpltCallback;
+    lcd_obj.dsi_object.hdma2d.XferCpltCallback = DMA2D_XferCpltCallback;
 
     /* Enable DMA2D global Interrupt */
     NVIC_EnableIRQ(DMA2D_IRQn);
