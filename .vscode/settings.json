@@ -33,5 +33,6 @@
         "type_traits": "c",
         "touch.h": "c",
         "app_touchgfx.h": "c"
-    }
+    },
+    "terminal.integrated.defaultProfile.windows": "Ubuntu-18.04 (WSL)"
 }

@@ -5,7 +5,7 @@
 #define TOUCHGFX_CACHEDFONT_HPP
 
 #include <fonts/FontCache.hpp>
-#include <GeneratedFont.hpp>
+#include <fonts/GeneratedFont.hpp>
 
 namespace touchgfx
 {

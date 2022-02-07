@@ -3,26 +3,21 @@
 /*********************************************************************************/
 #include <gui_generated/mainpage_screen/MainPageViewBase.hpp>
 #include <touchgfx/Color.hpp>
-#include <texts/TextKeysAndLanguages.hpp>
 #include "BitmapDatabase.hpp"
+#include <texts/TextKeysAndLanguages.hpp>
 
 MainPageViewBase::MainPageViewBase()
 {
 
-    __background.setPosition(0, 0, 800, 480);
+    __background.setPosition(0, 0, 480, 800);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
 
-    box1.setPosition(0, 0, 800, 480);
+    box1.setPosition(0, 0, 480, 800);
     box1.setColor(touchgfx::Color::getColorFromRGB(56, 56, 56));
 
-    textArea1.setXY(456, 66);
-    textArea1.setColor(touchgfx::Color::getColorFromRGB(214, 214, 214));
-    textArea1.setLinespacing(0);
-    textArea1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID1));
+    container1.setPosition(0, 0, 480, 800);
 
-    container1.setPosition(0, 0, 346, 480);
-
-    box2.setPosition(0, 0, 310, 480);
+    box2.setPosition(0, 0, 480, 800);
     box2.setColor(touchgfx::Color::getColorFromRGB(23, 23, 23));
     container1.add(box2);
 
@@ -32,26 +27,50 @@ MainPageViewBase::MainPageViewBase()
     swipeContainer1.setSwipeCutoff(50);
     swipeContainer1.setEndSwipeElasticWidth(50);
 
-    page2.setWidth(310);
-    page2.setHeight(480);
+    page2.setWidth(480);
+    page2.setHeight(800);
 
-    buttonWithLabel2.setXY(88, 339);
+    buttonWithLabel2.setXY(155, 653);
     buttonWithLabel2.setBitmaps(touchgfx::Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
     buttonWithLabel2.setLabelText(touchgfx::TypedText(T_SINGLEUSEID3));
     buttonWithLabel2.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     buttonWithLabel2.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
     page2.add(buttonWithLabel2);
+
+    textArea1_1_1.setXY(206, 210);
+    textArea1_1_1.setColor(touchgfx::Color::getColorFromRGB(130, 130, 130));
+    textArea1_1_1.setLinespacing(0);
+    textArea1_1_1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID11));
+    page2.add(textArea1_1_1);
+
+    textArea1_2.setXY(162, 149);
+    textArea1_2.setColor(touchgfx::Color::getColorFromRGB(130, 130, 130));
+    textArea1_2.setLinespacing(0);
+    textArea1_2.setTypedText(touchgfx::TypedText(T_SINGLEUSEID12));
+    page2.add(textArea1_2);
     swipeContainer1.add(page2);
 
-    page1.setWidth(310);
-    page1.setHeight(480);
+    page1.setWidth(480);
+    page1.setHeight(800);
 
-    buttonWithLabel1.setXY(88, 339);
+    buttonWithLabel1.setXY(155, 653);
     buttonWithLabel1.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
     buttonWithLabel1.setLabelText(touchgfx::TypedText(T_SINGLEUSEID2));
     buttonWithLabel1.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     buttonWithLabel1.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
     page1.add(buttonWithLabel1);
+
+    textArea1_1.setXY(206, 210);
+    textArea1_1.setColor(touchgfx::Color::getColorFromRGB(130, 130, 130));
+    textArea1_1.setLinespacing(0);
+    textArea1_1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID10));
+    page1.add(textArea1_1);
+
+    textArea1.setXY(162, 149);
+    textArea1.setColor(touchgfx::Color::getColorFromRGB(130, 130, 130));
+    textArea1.setLinespacing(0);
+    textArea1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID9));
+    page1.add(textArea1);
     swipeContainer1.add(page1);
     swipeContainer1.setSelectedPage(1);
     container1.add(swipeContainer1);
@@ -60,37 +79,37 @@ MainPageViewBase::MainPageViewBase()
         touchgfx::Bitmap(BITMAP_BOTTOM_SLIDE_MENU_BACKGROUND_ID),
         touchgfx::Bitmap(BITMAP_BOTTOM_SLIDE_MENU_BUTTON_ID),
         touchgfx::Bitmap(BITMAP_BOTTOM_SLIDE_MENU_BUTTON_ID),
-        0, 30, 240, 0);
+        0, 30, 210, 2);
     slideMenu1.setState(touchgfx::SlideMenu::COLLAPSED);
     slideMenu1.setVisiblePixelsWhenCollapsed(25);
     slideMenu1.setHiddenPixelsWhenExpanded(0);
     slideMenu1.setAnimationEasingEquation(touchgfx::EasingEquations::cubicEaseInOut);
     slideMenu1.setAnimationDuration(18);
     slideMenu1.setExpandedStateTimeout(180);
-    slideMenu1.setXY(310, 393);
+    slideMenu1.setXY(0, 713);
 
-    buttonWithLabel3.setXY(118, 25);
+    buttonWithLabel3.setXY(90, 25);
     buttonWithLabel3.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_PRESSED_ID));
     buttonWithLabel3.setLabelText(touchgfx::TypedText(T_SINGLEUSEID5));
     buttonWithLabel3.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     buttonWithLabel3.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
     slideMenu1.add(buttonWithLabel3);
 
-    buttonWithLabel3_1.setXY(354, 25);
+    buttonWithLabel3_1.setXY(331, 25);
     buttonWithLabel3_1.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_PRESSED_ID));
     buttonWithLabel3_1.setLabelText(touchgfx::TypedText(T_SINGLEUSEID6));
     buttonWithLabel3_1.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     buttonWithLabel3_1.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
     slideMenu1.add(buttonWithLabel3_1);
 
-    buttonWithLabel3_2.setXY(276, 25);
+    buttonWithLabel3_2.setXY(253, 25);
     buttonWithLabel3_2.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_PRESSED_ID));
     buttonWithLabel3_2.setLabelText(touchgfx::TypedText(T_SINGLEUSEID7));
     buttonWithLabel3_2.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     buttonWithLabel3_2.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
     slideMenu1.add(buttonWithLabel3_2);
 
-    buttonWithLabel3_3.setXY(194, 25);
+    buttonWithLabel3_3.setXY(171, 25);
     buttonWithLabel3_3.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_PRESSED_ID));
     buttonWithLabel3_3.setLabelText(touchgfx::TypedText(T_SINGLEUSEID8));
     buttonWithLabel3_3.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -99,7 +118,6 @@ MainPageViewBase::MainPageViewBase()
 
     add(__background);
     add(box1);
-    add(textArea1);
     add(container1);
     add(slideMenu1);
 }

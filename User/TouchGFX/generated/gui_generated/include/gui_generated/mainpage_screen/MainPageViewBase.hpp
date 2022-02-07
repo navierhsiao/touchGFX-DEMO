@@ -8,10 +8,10 @@
 #include <mvp/View.hpp>
 #include <gui/mainpage_screen/MainPagePresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/Container.hpp>
 #include <touchgfx/containers/SwipeContainer.hpp>
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
+#include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/SlideMenu.hpp>
 
 class MainPageViewBase : public touchgfx::View<MainPagePresenter>
@@ -31,14 +31,17 @@ protected:
      */
     touchgfx::Box __background;
     touchgfx::Box box1;
-    touchgfx::TextArea textArea1;
     touchgfx::Container container1;
     touchgfx::Box box2;
     touchgfx::SwipeContainer swipeContainer1;
     touchgfx::Container page2;
     touchgfx::ButtonWithLabel buttonWithLabel2;
+    touchgfx::TextArea textArea1_1_1;
+    touchgfx::TextArea textArea1_2;
     touchgfx::Container page1;
     touchgfx::ButtonWithLabel buttonWithLabel1;
+    touchgfx::TextArea textArea1_1;
+    touchgfx::TextArea textArea1;
     touchgfx::SlideMenu slideMenu1;
     touchgfx::ButtonWithLabel buttonWithLabel3;
     touchgfx::ButtonWithLabel buttonWithLabel3_1;
