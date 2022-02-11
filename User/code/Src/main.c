@@ -2,7 +2,6 @@
 #include "cmsis_os.h"
 #include "fatfs.h"
 #include "../../../BSP/system.h"
-#include "app_touchgfx.h"
 
 osThreadId_t defaultTaskHandle;
 osThreadId_t touchTaskID;
@@ -20,6 +19,8 @@ const osThreadAttr_t TouchGFXTask_attributes = {
   .priority = ( tskIDLE_PRIORITY + 3 ),
 };
 
+void touchgfx_init(void);
+
 void StartDefaultTask(void *argument);
 void TouchGFX_Task(void *argument);
 
@@ -27,7 +28,7 @@ int main(void)
 {
   Hardware_Init();
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
-  MX_TouchGFX_Init();
+  touchgfx_init();
 
   osKernelInitialize();
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);

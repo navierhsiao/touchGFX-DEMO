@@ -9,15 +9,15 @@
 MainPageViewBase::MainPageViewBase()
 {
 
-    __background.setPosition(0, 0, 480, 800);
+    __background.setPosition(0, 0, 480, 854);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
 
-    box1.setPosition(0, 0, 480, 800);
+    box1.setPosition(0, 0, 480, 854);
     box1.setColor(touchgfx::Color::getColorFromRGB(56, 56, 56));
 
-    container1.setPosition(0, 0, 480, 800);
+    container1.setPosition(0, 0, 480, 854);
 
-    box2.setPosition(0, 0, 480, 800);
+    box2.setPosition(0, 0, 480, 854);
     box2.setColor(touchgfx::Color::getColorFromRGB(23, 23, 23));
     container1.add(box2);
 
@@ -28,10 +28,10 @@ MainPageViewBase::MainPageViewBase()
     swipeContainer1.setEndSwipeElasticWidth(50);
 
     page2.setWidth(480);
-    page2.setHeight(800);
+    page2.setHeight(854);
 
     buttonWithLabel2.setXY(155, 653);
-    buttonWithLabel2.setBitmaps(touchgfx::Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
+    buttonWithLabel2.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
     buttonWithLabel2.setLabelText(touchgfx::TypedText(T_SINGLEUSEID3));
     buttonWithLabel2.setLabelColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
     buttonWithLabel2.setLabelColorPressed(touchgfx::Color::getColorFromRGB(255, 255, 255));
@@ -51,7 +51,7 @@ MainPageViewBase::MainPageViewBase()
     swipeContainer1.add(page2);
 
     page1.setWidth(480);
-    page1.setHeight(800);
+    page1.setHeight(854);
 
     buttonWithLabel1.setXY(155, 653);
     buttonWithLabel1.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
@@ -86,7 +86,7 @@ MainPageViewBase::MainPageViewBase()
     slideMenu1.setAnimationEasingEquation(touchgfx::EasingEquations::cubicEaseInOut);
     slideMenu1.setAnimationDuration(18);
     slideMenu1.setExpandedStateTimeout(180);
-    slideMenu1.setXY(0, 713);
+    slideMenu1.setXY(0, 767);
 
     buttonWithLabel3.setXY(90, 25);
     buttonWithLabel3.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_PRESSED_ID));

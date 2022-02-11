@@ -45,13 +45,11 @@
                 "Libraries/touchgfx/framework/include/touchgfx/widgets",
                 "Libraries/touchgfx/framework/include/touchgfx",
                 "User/code/Inc",
-                "User/touchGFX/App",
                 "User/touchGFX/generated/fonts/include/fonts",
                 "User/touchGFX/gui/include/gui/common",
                 "User/touchGFX/gui/include/gui/containers",
                 "User/touchGFX/gui/include/gui/mainpage_screen",
                 "User/touchGFX/gui/include/gui/model",
-                "User/touchGFX/target/generated",
                 "User/touchGFX/target",
                 "Libraries/FatFs/src"
             ],

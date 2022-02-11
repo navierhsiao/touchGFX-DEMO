@@ -11,7 +11,7 @@
 void setupSimulator(int argc, char** argv, touchgfx::HAL& hal) {
   // Simulate hardware running at 60Hz generating a vsync every 16.6667 ms
   static_cast<touchgfx::HALSDL2&>(hal).setVsyncInterval(16.6667f);
-  static_cast<touchgfx::HALSDL2&>(hal).setWindowTitle("H747_TouchGFX");
+  static_cast<touchgfx::HALSDL2&>(hal).setWindowTitle("747_custom");
 
   // Initialize SDL
   bool sdl_init_result = static_cast<touchgfx::HALSDL2&>(hal).sdl_init(argc, argv);

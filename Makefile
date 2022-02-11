@@ -43,7 +43,6 @@ C_SOURCES_DIR += Libraries/FreeRTOS
 C_SOURCES_DIR += Libraries/STM32_USB_Host_Library
 C_SOURCES_DIR += Libraries/STM32H7xx_HAL_Driver/Src
 C_SOURCES_DIR += User/code/Src
-C_SOURCES_DIR += User/TouchGFX/App
 
 C_SOURCES := $(foreach dir,$(C_SOURCES_DIR),$(shell find $(dir) -name '*.c')) 
 
@@ -58,6 +57,7 @@ CPP_SOURCES_DIR += User/TouchGFX/generated/images/src
 CPP_SOURCES_DIR += User/TouchGFX/generated/texts/src
 CPP_SOURCES_DIR += User/TouchGFX/gui/src
 CPP_SOURCES_DIR += User/TouchGFX/target
+CPP_SOURCES_DIR += User/code/Src
 
 CPP_SOURCES := $(foreach dir,$(CPP_SOURCES_DIR),$(shell find $(dir) -name '*.cpp')) 
 

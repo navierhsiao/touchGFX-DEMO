@@ -11,7 +11,7 @@ listedBtnBase::listedBtnBase()
     listLayout1.setDirection(touchgfx::SOUTH);
     listLayout1.setXY(4, 0);
 
-    button1.setBitmaps(touchgfx::Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
+    button1.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
     listLayout1.add(button1);
 
     add(listLayout1);
