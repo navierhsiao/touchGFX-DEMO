@@ -8,6 +8,7 @@
 #include "stm32h7xx_hal_dma2d.h"
 
 #include <cassert>
+#include "../../../BSP/system.h"
 
 static HAL_StatusTypeDef HAL_DMA2D_SetMode(DMA2D_HandleTypeDef *hdma2d, uint32_t mode, uint32_t color, uint32_t offset)
 {
@@ -21,7 +22,8 @@ static HAL_StatusTypeDef HAL_DMA2D_SetMode(DMA2D_HandleTypeDef *hdma2d, uint32_t
 }
 
 extern "C" {
-DMA2D_HandleTypeDef hdma2d;
+
+extern lcd_objectTypeDef lcd_obj;
 
 static void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle)
 {
@@ -41,17 +43,17 @@ TouchGFXDMA::TouchGFXDMA()
 
 TouchGFXDMA::~TouchGFXDMA()
 {
-    HAL_DMA2D_DeInit(&hdma2d);
+    HAL_DMA2D_DeInit(&lcd_obj.dsi_object.hdma2d);
     NVIC_DisableIRQ(DMA2D_IRQn);
 }
 
 void TouchGFXDMA::initialize()
 {
-    hdma2d.Instance = DMA2D;
-    HAL_DMA2D_Init(&hdma2d);
+    lcd_obj.dsi_object.hdma2d.Instance = DMA2D;
+    HAL_DMA2D_Init(&lcd_obj.dsi_object.hdma2d);
 
-    hdma2d.XferCpltCallback = DMA2D_XferCpltCallback;
-    hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
+    lcd_obj.dsi_object.hdma2d.XferCpltCallback = DMA2D_XferCpltCallback;
+    lcd_obj.dsi_object.hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
 
     NVIC_EnableIRQ(DMA2D_IRQn);
 }
@@ -114,27 +116,27 @@ void TouchGFXDMA::setupDataCopy(const BlitOp& blitOp)
     }
 
     /* HAL_DMA2D_ConfigLayer() depends on hdma2d.Init */
-    hdma2d.Init.Mode = dma2dTransferMode;
-    hdma2d.Init.ColorMode = (bitDepth == 16) ? DMA2D_RGB565 : DMA2D_RGB888;
-    hdma2d.Init.OutputOffset = blitOp.dstLoopStride - blitOp.nSteps;
+    lcd_obj.dsi_object.hdma2d.Init.Mode = dma2dTransferMode;
+    lcd_obj.dsi_object.hdma2d.Init.ColorMode = (bitDepth == 16) ? DMA2D_RGB565 : DMA2D_RGB888;
+    lcd_obj.dsi_object.hdma2d.Init.OutputOffset = blitOp.dstLoopStride - blitOp.nSteps;
 
-    HAL_DMA2D_SetMode(&hdma2d, dma2dTransferMode,
+    HAL_DMA2D_SetMode(&lcd_obj.dsi_object.hdma2d, dma2dTransferMode,
                       (bitDepth == 16) ? DMA2D_RGB565 : DMA2D_RGB888,
                       blitOp.dstLoopStride - blitOp.nSteps);
 
-    hdma2d.LayerCfg[1].InputColorMode = dma2dColorMode;
-    hdma2d.LayerCfg[1].InputOffset = blitOp.srcLoopStride - blitOp.nSteps;
+    lcd_obj.dsi_object.hdma2d.LayerCfg[1].InputColorMode = dma2dColorMode;
+    lcd_obj.dsi_object.hdma2d.LayerCfg[1].InputOffset = blitOp.srcLoopStride - blitOp.nSteps;
 
     if (blendingImage || blendingText)
     {
         if (blitOp.alpha < 255)
         {
-            hdma2d.LayerCfg[1].AlphaMode = DMA2D_COMBINE_ALPHA;
-            hdma2d.LayerCfg[1].InputAlpha = blitOp.alpha;
+            lcd_obj.dsi_object.hdma2d.LayerCfg[1].AlphaMode = DMA2D_COMBINE_ALPHA;
+            lcd_obj.dsi_object.hdma2d.LayerCfg[1].InputAlpha = blitOp.alpha;
         }
         else
         {
-            hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
+            lcd_obj.dsi_object.hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
         }
 
         if (blendingText)
@@ -145,25 +147,25 @@ void TouchGFXDMA::setupDataCopy(const BlitOp& blitOp)
                 uint32_t green = (((blitOp.color & 0x7E0) >> 5) * 255) / 63;
                 uint32_t blue = (((blitOp.color & 0x1F)) * 255) / 31;
                 uint32_t alpha = blitOp.alpha;
-                hdma2d.LayerCfg[1].InputAlpha = (alpha << 24) | (red << 16) | (green << 8) | blue;
+                lcd_obj.dsi_object.hdma2d.LayerCfg[1].InputAlpha = (alpha << 24) | (red << 16) | (green << 8) | blue;
             }
             else
             {
-                hdma2d.LayerCfg[1].InputAlpha = blitOp.color.getColor32() | (blitOp.alpha << 24);
+                lcd_obj.dsi_object.hdma2d.LayerCfg[1].InputAlpha = blitOp.color.getColor32() | (blitOp.alpha << 24);
             }
         }
 
-        hdma2d.LayerCfg[0].InputOffset = blitOp.dstLoopStride - blitOp.nSteps;
-        hdma2d.LayerCfg[0].InputColorMode = (bitDepth == 16) ? CM_RGB565 : CM_RGB888;
+        lcd_obj.dsi_object.hdma2d.LayerCfg[0].InputOffset = blitOp.dstLoopStride - blitOp.nSteps;
+        lcd_obj.dsi_object.hdma2d.LayerCfg[0].InputColorMode = (bitDepth == 16) ? CM_RGB565 : CM_RGB888;
 
-        HAL_DMA2D_ConfigLayer(&hdma2d, 0);
+        HAL_DMA2D_ConfigLayer(&lcd_obj.dsi_object.hdma2d, 0);
     }
 
-    HAL_DMA2D_ConfigLayer(&hdma2d, 1);
+    HAL_DMA2D_ConfigLayer(&lcd_obj.dsi_object.hdma2d, 1);
 
     if (blendingImage || blendingText)
     {
-        HAL_DMA2D_BlendingStart_IT(&hdma2d,
+        HAL_DMA2D_BlendingStart_IT(&lcd_obj.dsi_object.hdma2d,
                                    (unsigned int)blitOp.pSrc,
                                    (unsigned int)blitOp.pDst,
                                    (unsigned int)blitOp.pDst,
@@ -171,7 +173,7 @@ void TouchGFXDMA::setupDataCopy(const BlitOp& blitOp)
     }
     else
     {
-        HAL_DMA2D_Start_IT(&hdma2d,
+        HAL_DMA2D_Start_IT(&lcd_obj.dsi_object.hdma2d,
                            (unsigned int)blitOp.pSrc,
                            (unsigned int)blitOp.pDst,
                            blitOp.nSteps, blitOp.nLoops);
@@ -209,36 +211,36 @@ void TouchGFXDMA::setupDataFill(const BlitOp& blitOp)
     };
 
     /* HAL_DMA2D_ConfigLayer() depends on hdma2d.Init */
-    hdma2d.Init.Mode = dma2dTransferMode;
-    hdma2d.Init.ColorMode = (bitDepth == 16) ? DMA2D_RGB565 : DMA2D_RGB888;
-    hdma2d.Init.OutputOffset = blitOp.dstLoopStride - blitOp.nSteps;
+    lcd_obj.dsi_object.hdma2d.Init.Mode = dma2dTransferMode;
+    lcd_obj.dsi_object.hdma2d.Init.ColorMode = (bitDepth == 16) ? DMA2D_RGB565 : DMA2D_RGB888;
+    lcd_obj.dsi_object.hdma2d.Init.OutputOffset = blitOp.dstLoopStride - blitOp.nSteps;
 
-    HAL_DMA2D_SetMode(&hdma2d, dma2dTransferMode,
+    HAL_DMA2D_SetMode(&lcd_obj.dsi_object.hdma2d, dma2dTransferMode,
                       (bitDepth == 16) ? DMA2D_RGB565 : DMA2D_RGB888,
                       blitOp.dstLoopStride - blitOp.nSteps);
 
     if (dma2dTransferMode == DMA2D_M2M_BLEND) {
-        hdma2d.LayerCfg[1].AlphaMode = DMA2D_REPLACE_ALPHA;
-        hdma2d.LayerCfg[1].InputAlpha = color;
-        hdma2d.LayerCfg[1].InputColorMode = CM_A8;
-        hdma2d.LayerCfg[0].InputOffset = blitOp.dstLoopStride - blitOp.nSteps;
-        hdma2d.LayerCfg[0].InputColorMode = (bitDepth == 16) ? CM_RGB565 : CM_RGB888;
-        HAL_DMA2D_ConfigLayer(&hdma2d, 0);
+        lcd_obj.dsi_object.hdma2d.LayerCfg[1].AlphaMode = DMA2D_REPLACE_ALPHA;
+        lcd_obj.dsi_object.hdma2d.LayerCfg[1].InputAlpha = color;
+        lcd_obj.dsi_object.hdma2d.LayerCfg[1].InputColorMode = CM_A8;
+        lcd_obj.dsi_object.hdma2d.LayerCfg[0].InputOffset = blitOp.dstLoopStride - blitOp.nSteps;
+        lcd_obj.dsi_object.hdma2d.LayerCfg[0].InputColorMode = (bitDepth == 16) ? CM_RGB565 : CM_RGB888;
+        HAL_DMA2D_ConfigLayer(&lcd_obj.dsi_object.hdma2d, 0);
     } else {
-        hdma2d.LayerCfg[1].InputColorMode = dma2dColorMode;
-        hdma2d.LayerCfg[1].InputOffset = 0;
+        lcd_obj.dsi_object.hdma2d.LayerCfg[1].InputColorMode = dma2dColorMode;
+        lcd_obj.dsi_object.hdma2d.LayerCfg[1].InputOffset = 0;
     }
 
-    HAL_DMA2D_ConfigLayer(&hdma2d, 1);
+    HAL_DMA2D_ConfigLayer(&lcd_obj.dsi_object.hdma2d, 1);
 
     if (dma2dTransferMode == DMA2D_M2M_BLEND)
-        HAL_DMA2D_BlendingStart_IT(&hdma2d,
+        HAL_DMA2D_BlendingStart_IT(&lcd_obj.dsi_object.hdma2d,
                                    (unsigned int)blitOp.pDst,
                                    (unsigned int)blitOp.pDst,
                                    (unsigned int)blitOp.pDst,
                                    blitOp.nSteps, blitOp.nLoops);
     else
-        HAL_DMA2D_Start_IT(&hdma2d, color, (unsigned int)blitOp.pDst,
+        HAL_DMA2D_Start_IT(&lcd_obj.dsi_object.hdma2d, color, (unsigned int)blitOp.pDst,
                            blitOp.nSteps, blitOp.nLoops);
 }
 

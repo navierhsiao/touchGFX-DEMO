@@ -14,7 +14,7 @@
 
 extern "C" lcd_objectTypeDef lcd_obj;
 extern "C" void touchgfx_init();
-// extern "C" void touchgfx_taskEntry();
+extern "C" void touchgfx_taskEntry();
 
 #define LAYER0_ADDRESS  (LCD_FRAME_BUFFER)
 
@@ -25,7 +25,7 @@ STM32TouchController tc;
 STM32H7Instrumentation mcuInstr;
 touchgfx::LCD24bpp lcd;
 uint16_t bitDepth = 24;
-// static TouchGFXHAL hal(dma, lcd, tc, 800, 480);
+// static STM32H7HAL hal(dma, lcd, tc, 480, 854);
 
 void touchgfx_init()
 {
@@ -55,13 +55,13 @@ void touchgfx_init()
     hal.enableMCULoadCalculation(true);
 }
 
-// void touchgfx_taskEntry()
-// {
-//     /*
-//      * Main event loop. Will wait for VSYNC signal, and then process next frame. Call
-//      * this function from your GUI task.
-//      *
-//      * Note This function never returns
-//      */
-//     hal.taskEntry();
-// }
+void touchgfx_taskEntry()
+{
+    /*
+     * Main event loop. Will wait for VSYNC signal, and then process next frame. Call
+     * this function from your GUI task.
+     *
+     * Note This function never returns
+     */
+    touchgfx::HAL::getInstance()->taskEntry();
+}

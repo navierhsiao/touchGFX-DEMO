@@ -53,11 +53,8 @@ void StartDefaultTask(void *argument)
   /* USER CODE END 5 */
 }
 
-__weak void TouchGFX_Task(void *argument)
+void TouchGFX_Task(void *argument)
 {
-  for(;;)
-  {
-    osDelay(1);
-  }
+  touchgfx_taskEntry();
 }
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
