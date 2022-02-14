@@ -60,14 +60,14 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
 
   //  DMA2D Init
 
-  object->hdma2d.Instance=DMA2D;
-  object->hdma2d.Init.Mode = DMA2D_M2M;
-  object->hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB888;
-  object->hdma2d.Init.OutputOffset = 0;
-  if (HAL_DMA2D_Init(&object->hdma2d) != HAL_OK)
-  {
-    Error_Handler(__FILE__, __LINE__);
-  }
+  // object->hdma2d.Instance=DMA2D;
+  // object->hdma2d.Init.Mode = DMA2D_M2M;
+  // object->hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB888;
+  // object->hdma2d.Init.OutputOffset = 0;
+  // if (HAL_DMA2D_Init(&object->hdma2d) != HAL_OK)
+  // {
+  //   Error_Handler(__FILE__, __LINE__);
+  // }
 
   //  DSI HOST Init
 
@@ -186,7 +186,7 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   pLayerCfg.Alpha0 = 0;
   pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
   pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
-  pLayerCfg.FBStartAdress = 0xD0000000;
+  pLayerCfg.FBStartAdress = LCD_FRAME_BUFFER;
   pLayerCfg.ImageWidth = Xsize;
   pLayerCfg.ImageHeight = Ysize;
   pLayerCfg.Backcolor.Blue = 0;
@@ -197,6 +197,25 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
     Error_Handler(__FILE__, __LINE__);
   }
 
+  // pLayerCfg.WindowX0 = 0;
+  // pLayerCfg.WindowX1 = Xsize;
+  // pLayerCfg.WindowY0 = 0;
+  // pLayerCfg.WindowY1 = Ysize;
+  // pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB888;
+  // pLayerCfg.Alpha = 255;
+  // pLayerCfg.Alpha0 = 0;
+  // pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
+  // pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
+  // pLayerCfg.FBStartAdress = LCD_FRAME_BUFFER_2;
+  // pLayerCfg.ImageWidth = Xsize;
+  // pLayerCfg.ImageHeight = Ysize;
+  // pLayerCfg.Backcolor.Blue = 0;
+  // pLayerCfg.Backcolor.Green = 0;
+  // pLayerCfg.Backcolor.Red = 0;
+  // if (HAL_LTDC_ConfigLayer(&object->hltdc, &pLayerCfg, 1) != HAL_OK)
+  // {
+  //   Error_Handler(__FILE__, __LINE__);
+  // }
   // __HAL_DSI_WRAPPER_ENABLE(&object->hdsi);
   /* USER CODE BEGIN LTDC_Init 2 */
   
@@ -257,11 +276,6 @@ void HAL_DSI_MspInit(DSI_HandleTypeDef* hdsi)
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF13_DSI;
     HAL_GPIO_Init(GPIOJ, &GPIO_InitStruct);
-
-    // GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    // GPIO_InitStruct.Pull = GPIO_NOPULL;
-    // GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    // HAL_GPIO_Init(GPIOJ, &GPIO_InitStruct); 
 
     HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_12, GPIO_PIN_RESET);
     /* DSI interrupt Init */

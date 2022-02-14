@@ -11,6 +11,22 @@ extern "C" lcd_objectTypeDef lcd_obj;
 
 using namespace touchgfx;
 
+void STM32H7HAL::initialize()
+{
+    HAL::initialize();
+    registerEventListener(*(Application::getInstance()));
+    //buffer2=0xD0000000+480*854*3(bitsize of RGB888=3)
+    //anim buffer=buffer2+single buffersize
+    setFrameBufferStartAddresses((void*)0xD0000000, (void*)0xD0706E00, (void*)0xD0E0DC00);
+    /*
+     * Set whether the DMA transfers are locked to the TFT update cycle. If
+     * locked, DMA transfer will not begin until the TFT controller has finished
+     * updating the display. If not locked, DMA transfers will begin as soon as
+     * possible. Default is true (DMA is locked with TFT).
+     */
+    lockDMAToFrontPorch(true);
+}
+
 uint16_t* STM32H7HAL::getTFTFrameBuffer() const
 {
     return (uint16_t*)LTDC_Layer1->CFBAR;
@@ -22,6 +38,20 @@ void STM32H7HAL::setTFTFrameBuffer(uint16_t* adr)
 
     /* Reload immediate */
     LTDC->SRCR = (uint32_t)LTDC_SRCR_IMR;
+}
+
+void STM32H7HAL::taskEntry()
+{
+    enableLCDControllerInterrupt();
+    enableInterrupts();
+
+    OSWrappers::waitForVSync();
+    backPorchExited();
+    for (;;)
+    {
+        OSWrappers::waitForVSync();
+        backPorchExited();
+    }
 }
 
 uint16_t STM32H7HAL::getTFTCurrentLine()

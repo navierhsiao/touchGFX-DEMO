@@ -198,7 +198,7 @@ void lcd_init(lcd_objectTypeDef *object,uint32_t colorCoding,uint32_t orientatio
   object->lcd_write_reg_long(object,0xFF,page0_change_set,5);
 
   object->lcd_write_reg_short(object, 0x35, 0x00);	 //TE ON
-  object->lcd_write_reg_short(object, 0x3A, 0x50);	 //50 -> 16BIT,  70 -> 24BIT
+  object->lcd_write_reg_short(object, 0x3A, 0x70);	 //50 -> 16BIT,  70 -> 24BIT
   object->lcd_write_reg_short(object, 0x11, 0x00);	 // exit Sleep
   HAL_Delay(120);
   object->lcd_write_reg_short(object, 0x29, 0x00);	// Display On

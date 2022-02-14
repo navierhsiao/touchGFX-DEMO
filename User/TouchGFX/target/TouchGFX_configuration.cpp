@@ -16,44 +16,41 @@ extern "C" lcd_objectTypeDef lcd_obj;
 extern "C" void touchgfx_init();
 extern "C" void touchgfx_taskEntry();
 
-#define LAYER0_ADDRESS  (LCD_FRAME_BUFFER)
+static uint32_t frameBuf0 = (uint32_t)(LCD_FRAME_BUFFER); //Beginning of SDRAM
+// static uint32_t frameBuf1 = (uint32_t)(LCD_FRAME_BUFFER_2);
 
-static uint32_t frameBuf0 = (uint32_t)(LAYER0_ADDRESS); //Beginning of SDRAM
-
-TouchGFXDMA dma;
-STM32TouchController tc;
-STM32H7Instrumentation mcuInstr;
-touchgfx::LCD24bpp lcd;
-uint16_t bitDepth = 24;
-// static STM32H7HAL hal(dma, lcd, tc, 480, 854);
+static TouchGFXDMA dma;
+static STM32TouchController tc;
+static STM32H7Instrumentation mcuInstr;
+static LCD24bpp lcd;
+static STM32H7HAL hal(dma, lcd, tc, 480, 854);
 
 void touchgfx_init()
 {
-    uint32_t dispWidth=480;
-    uint32_t dispHeight=854;
+    Bitmap::registerBitmapDatabase(BitmapDatabase::getInstance(), BitmapDatabase::getInstanceSize());
+    TypedText::registerTexts(&texts);
+    Texts::setLanguage(0);
 
-    HAL& hal = touchgfx_generic_init<STM32H7HAL>(dma, lcd, tc, dispWidth, dispHeight,
-                                                 (uint16_t *)(frameBuf0 + dispWidth * dispHeight * 2 * 3),
-                                                 4 * 1024 * 1024, 64);
+    FontManager::setFontProvider(&fontProvider);
 
+    FrontendHeap& heap = FrontendHeap::getInstance();
+    /*
+     * we need to obtain the reference above to initialize the frontend heap.
+     */
+    (void)heap;
 
-    hal.setFrameBufferStartAddresses((uint16_t*)frameBuf0, NULL, NULL);
-    hal.setTouchSampleRate(1);
-    hal.setFingerSize(1);
+    /*
+     * Initialize TouchGFX
+     */
+    hal.initialize();
 
-    // By default frame rate compensation is off.
-    // Enable frame rate compensation to smooth out animations in case there is periodic slow frame rates.
-    hal.setFrameRateCompensation(false);
-
-    // This platform can handle simultaneous DMA and TFT accesses to SDRAM, so disable lock to increase performance.
     hal.lockDMAToFrontPorch(false);
 
     mcuInstr.init();
-
-    //Set MCU instrumentation and Load calculation
     hal.setMCUInstrumentation(&mcuInstr);
     hal.enableMCULoadCalculation(true);
 }
+
 
 void touchgfx_taskEntry()
 {
@@ -63,5 +60,6 @@ void touchgfx_taskEntry()
      *
      * Note This function never returns
      */
-    touchgfx::HAL::getInstance()->taskEntry();
+    // touchgfx::HAL::getInstance()->taskEntry();
+    hal.taskEntry();
 }

@@ -33,6 +33,9 @@ public:
     STM32H7HAL(touchgfx::DMA_Interface& dma, touchgfx::LCD& display, touchgfx::TouchController& tc, uint16_t width, uint16_t height) : touchgfx::HAL(dma, display, tc, width, height)
     {
     }
+
+    void initialize();
+    
     /**
      * @fn virtual void STM32H7HAL::disableInterrupts();
      *
@@ -120,6 +123,18 @@ public:
      */
     virtual uint16_t getTFTCurrentLine();
 
+    /**
+     * @fn virtual void TouchGFXHAL::taskEntry();
+     *
+     * @brief Main event loop.
+     *
+     *        Main event loop. Will wait for VSYNC signal, and then process next frame. Call
+     *        this function from your GUI task.
+     *
+     * @note This function never returns!
+     */
+    virtual void taskEntry();
+    
 protected:
     /**
      * @fn virtual uint16_t* STM32H7HAL::getTFTFrameBuffer() const;
