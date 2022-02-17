@@ -135,6 +135,20 @@ public:
      */
     virtual void taskEntry();
     
+    /**
+     *
+     * @fn virtual void TouchGFXGeneratedHAL::blockCopy();
+     *
+     * This function performs a platform-specific memcpy, if supported by the hardware.
+     *
+     * @param [out] dest     Pointer to destination memory.
+     * @param [in]  src      Pointer to source memory.
+     * @param       numBytes Number of bytes to copy.
+     *
+     * @return true if the copy succeeded, false if copy was not performed.
+     */
+    virtual bool blockCopy(void* RESTRICT dest, const void* RESTRICT src, uint32_t numBytes);
+    
 protected:
     /**
      * @fn virtual uint16_t* STM32H7HAL::getTFTFrameBuffer() const;
@@ -157,6 +171,10 @@ protected:
      * @param [in,out] adr New frame buffer address.
      */
     virtual void setTFTFrameBuffer(uint16_t* adr);
+
+    virtual void InvalidateCache();
+
+    virtual void FlushCache();
 };
 
 #endif // STM32H7HAL_HPP

@@ -17,7 +17,7 @@ void STM32H7HAL::initialize()
     registerEventListener(*(Application::getInstance()));
     //buffer2=0xD0000000+480*854*3(bitsize of RGB888=3)
     //anim buffer=buffer2+single buffersize
-    setFrameBufferStartAddresses((void*)0xD0000000, (void*)0xD0706E00, (void*)0xD0E0DC00);
+    setFrameBufferStartAddresses((void*)0xD0000000, (void*)0xD0190500, (void*)0xD0320A00);
     /*
      * Set whether the DMA transfers are locked to the TFT update cycle. If
      * locked, DMA transfer will not begin until the TFT controller has finished
@@ -38,6 +38,11 @@ void STM32H7HAL::setTFTFrameBuffer(uint16_t* adr)
 
     /* Reload immediate */
     LTDC->SRCR = (uint32_t)LTDC_SRCR_IMR;
+}
+
+bool STM32H7HAL::blockCopy(void* RESTRICT dest, const void* RESTRICT src, uint32_t numBytes)
+{
+    return HAL::blockCopy(dest, src, numBytes);
 }
 
 void STM32H7HAL::taskEntry()
@@ -107,6 +112,11 @@ void STM32H7HAL::enableInterrupts()
     NVIC_EnableIRQ(LTDC_IRQn);
     NVIC_EnableIRQ(DMA2D_IRQn);
     NVIC_EnableIRQ(LTDC_ER_IRQn);
+    
+    __HAL_DSI_CLEAR_FLAG(&lcd_obj.dsi_object.hdsi, DSI_IT_ER);
+    __HAL_DSI_CLEAR_FLAG(&lcd_obj.dsi_object.hdsi, DSI_IT_TE);
+    __HAL_DSI_ENABLE_IT(&lcd_obj.dsi_object.hdsi, DSI_IT_TE);
+    __HAL_DSI_ENABLE_IT(&lcd_obj.dsi_object.hdsi, DSI_IT_ER);
 }
 
 void STM32H7HAL::flushFrameBuffer(const touchgfx::Rect& rect)
@@ -116,6 +126,24 @@ void STM32H7HAL::flushFrameBuffer(const touchgfx::Rect& rect)
     // thus we have to both flush and invalidate the Dcache prior to letting
     // DMA2D accessing it. That's done using SCB_CleanInvalidateDCache().
     HAL::flushFrameBuffer(rect);
+    SCB_CleanInvalidateDCache();
+}
+
+void STM32H7HAL::InvalidateCache()
+{
+    // If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then
+    // the DCache must be flushed prior to DMA2D accessing it. That's done
+    // using the function SCB_CleanInvalidateDCache(). Remember to enable "CPU Cache" in the
+    // "System Core" settings for "Cortex M7" in CubeMX in order for this function call to work.
+    SCB_CleanInvalidateDCache();
+}
+
+void STM32H7HAL::FlushCache()
+{
+    // If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then
+    // the DCache must be flushed prior to DMA2D accessing it. That's done
+    // using the function SCB_CleanInvalidateDCache(). Remember to enable "CPU Cache" in the
+    // "System Core" settings for "Cortex M7" in CubeMX in order for this function call to work.
     SCB_CleanInvalidateDCache();
 }
 
@@ -142,5 +170,18 @@ extern "C"
             GPIO::clear(GPIO::VSYNC_FREQ);
             HAL::getInstance()->frontPorchEntered();
         }
+    }
+
+    portBASE_TYPE IdleTaskHook(void* p)
+    {
+        if ((int)p) //idle task sched out
+        {
+            touchgfx::HAL::getInstance()->setMCUActive(true);
+        }
+        else //idle task sched in
+        {
+            touchgfx::HAL::getInstance()->setMCUActive(false);
+        }
+        return pdTRUE;
     }
 }

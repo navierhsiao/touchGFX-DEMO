@@ -30,15 +30,16 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::Box box1;
     touchgfx::Container container1;
     touchgfx::Box box2;
     touchgfx::SwipeContainer swipeContainer1;
     touchgfx::Container page2;
+    touchgfx::Box box4;
     touchgfx::ButtonWithLabel buttonWithLabel2;
     touchgfx::TextArea textArea1_1_1;
     touchgfx::TextArea textArea1_2;
     touchgfx::Container page1;
+    touchgfx::Box box3;
     touchgfx::ButtonWithLabel buttonWithLabel1;
     touchgfx::TextArea textArea1_1;
     touchgfx::TextArea textArea1;

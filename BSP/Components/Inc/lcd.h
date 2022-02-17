@@ -48,13 +48,6 @@ typedef struct lcd_structDef
   void (*lcd_write_reg_long)  (struct lcd_structDef *object,uint16_t reg, uint8_t *data, uint16_t length);
   void (*lcd_read_reg)        (struct lcd_structDef *object,uint16_t reg, uint8_t *data, uint16_t length);
 
-  void (*lcd_readID)          (struct lcd_structDef *object);
-  void (*lcd_setBrightness)   (struct lcd_structDef *object,uint32_t brightness);
-  void (*lcd_displayOnOFF)    (struct lcd_structDef *object,uint8_t state);
-  void (*lcd_setOrientation)  (struct lcd_structDef *object,uint32_t orientation);
-  void (*lcd_getXsize)        (struct lcd_structDef *object,uint32_t *xSize);
-  void (*lcd_getYsize)        (struct lcd_structDef *object,uint32_t *ySize);
-
   void (*lcd_draw_line)       (struct lcd_structDef *object,uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint32_t color);
   void (*lcd_draw_rect)       (struct lcd_structDef *object,uint16_t x,uint16_t y,uint16_t xsize,uint16_t ysize,uint32_t color);
   void (*lcd_showString)      (struct lcd_structDef *object,uint16_t x,uint16_t y,sFONT *fonts,uint32_t color,const char *string,...);

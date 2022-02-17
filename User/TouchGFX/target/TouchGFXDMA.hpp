@@ -2,13 +2,14 @@
 #define TOUCHGFXDMA_HPP
 
 #include <touchgfx/hal/DMA.hpp>
+#include <touchgfx/Bitmap.hpp>
 
 using namespace touchgfx;
 
 /**
  * @class TouchGFXDMA TouchGFXDMA.hpp
  *
- * @brief This class specializes DMA_Interface for the ST F7xx processors.
+ * @brief This class specializes DMA_Interface for the ST H7xx processors.
  *
  * @sa touchgfx::DMA_Interface
  */
@@ -79,15 +80,6 @@ public:
         executeCompleted();
     }
 
-    /**
-     * @fn void TouchGFXDMA::start();
-     *
-     * @brief Signals that DMA transfers can start.
-     *
-     *        Signals that DMA transfers can start. If any elements are in the queue, start it.
-     */
-    virtual void start();
-
 protected:
     /**
      * @fn virtual void TouchGFXDMA::setupDataCopy(const touchgfx::BlitOp& blitOp);
@@ -114,6 +106,9 @@ protected:
 private:
     touchgfx::LockFreeDMA_Queue dma_queue;
     touchgfx::BlitOp            queue_storage[96];
+
+    uint32_t getChromARTInputFormat(touchgfx::Bitmap::BitmapFormat format);
+    uint32_t getChromARTOutputFormat(touchgfx::Bitmap::BitmapFormat format);
 };
 
 #endif // TouchGFXDMA_HPP

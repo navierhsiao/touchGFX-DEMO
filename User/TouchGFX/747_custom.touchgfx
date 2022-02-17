@@ -4,33 +4,13 @@
       {
         "Components": [
           {
-            "Type": "Box",
-            "Color": {
-              "Red": 56,
-              "Green": 56,
-              "Blue": 56
-            },
-            "Alpha": 255,
-            "Name": "box1",
-            "X": 0,
-            "Y": 0,
-            "Width": 480,
-            "Height": 854,
-            "Visible": true,
-            "LockPosition": false,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
             "Components": [
               {
                 "Type": "Box",
                 "Color": {
-                  "Red": 23,
-                  "Green": 23,
-                  "Blue": 23
+                  "Red": 28,
+                  "Green": 25,
+                  "Blue": 25
                 },
                 "Alpha": 255,
                 "Name": "box2",
@@ -49,6 +29,26 @@
                 "Components": [
                   {
                     "Components": [
+                      {
+                        "Type": "Box",
+                        "Color": {
+                          "Red": 98,
+                          "Green": 255,
+                          "Blue": 0
+                        },
+                        "Alpha": 255,
+                        "Name": "box4",
+                        "X": 162,
+                        "Y": 273,
+                        "Width": 157,
+                        "Height": 335,
+                        "Visible": true,
+                        "LockPosition": false,
+                        "Draggable": false,
+                        "Clickable": false,
+                        "Fadeable": false,
+                        "Moveable": false
+                      },
                       {
                         "Type": "ButtonWithLabel",
                         "Pressed": "__designer\\Dark_Buttons_Round_Edge_small_pressed.png",
@@ -144,6 +144,26 @@
                   },
                   {
                     "Components": [
+                      {
+                        "Type": "Box",
+                        "Color": {
+                          "Red": 255,
+                          "Green": 0,
+                          "Blue": 0
+                        },
+                        "Alpha": 255,
+                        "Name": "box3",
+                        "X": 162,
+                        "Y": 273,
+                        "Width": 157,
+                        "Height": 335,
+                        "Visible": true,
+                        "LockPosition": false,
+                        "Draggable": false,
+                        "Clickable": false,
+                        "Fadeable": false,
+                        "Moveable": false
+                      },
                       {
                         "Type": "ButtonWithLabel",
                         "Pressed": "__designer\\Dark_Buttons_Round_Edge_small_pressed.png",
@@ -512,14 +532,6 @@
     ],
     "TextEntries": [
       {
-        "TextEntryId": "SingleUseId2",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId3",
-        "IsResource": false
-      },
-      {
         "TextEntryId": "SingleUseId4",
         "IsResource": false
       },
@@ -540,11 +552,7 @@
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId9",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId10",
+        "TextEntryId": "SingleUseId3",
         "IsResource": false
       },
       {
@@ -553,6 +561,18 @@
       },
       {
         "TextEntryId": "SingleUseId12",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId2",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId10",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId9",
         "IsResource": false
       }
     ],
@@ -564,7 +584,7 @@
     "SelectedColorDepth": 24,
     "StartupScreenName": "MainPage",
     "SelectedStartupLanguage": "GB",
-    "Skin": "Blue",
+    "Skin": "Dark",
     "TouchGfxPath": "touchgfx",
     "UIPath": ".",
     "ApplicationTemplateName": "Simulator",

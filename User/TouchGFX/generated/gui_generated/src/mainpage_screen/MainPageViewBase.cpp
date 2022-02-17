@@ -12,13 +12,10 @@ MainPageViewBase::MainPageViewBase()
     __background.setPosition(0, 0, 480, 854);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
 
-    box1.setPosition(0, 0, 480, 854);
-    box1.setColor(touchgfx::Color::getColorFromRGB(56, 56, 56));
-
     container1.setPosition(0, 0, 480, 854);
 
     box2.setPosition(0, 0, 480, 854);
-    box2.setColor(touchgfx::Color::getColorFromRGB(23, 23, 23));
+    box2.setColor(touchgfx::Color::getColorFromRGB(28, 25, 25));
     container1.add(box2);
 
     swipeContainer1.setXY(0, 0);
@@ -29,6 +26,10 @@ MainPageViewBase::MainPageViewBase()
 
     page2.setWidth(480);
     page2.setHeight(854);
+
+    box4.setPosition(162, 273, 157, 335);
+    box4.setColor(touchgfx::Color::getColorFromRGB(98, 255, 0));
+    page2.add(box4);
 
     buttonWithLabel2.setXY(155, 653);
     buttonWithLabel2.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
@@ -52,6 +53,10 @@ MainPageViewBase::MainPageViewBase()
 
     page1.setWidth(480);
     page1.setHeight(854);
+
+    box3.setPosition(162, 273, 157, 335);
+    box3.setColor(touchgfx::Color::getColorFromRGB(255, 0, 0));
+    page1.add(box3);
 
     buttonWithLabel1.setXY(155, 653);
     buttonWithLabel1.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
@@ -117,7 +122,6 @@ MainPageViewBase::MainPageViewBase()
     slideMenu1.add(buttonWithLabel3_3);
 
     add(__background);
-    add(box1);
     add(container1);
     add(slideMenu1);
 }

@@ -29,27 +29,16 @@ void copy_buffer_R2M(ltdc_dsi_objectTypeDef *object,uint32_t *dst,uint16_t xsize
 void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
 {
   DSI_PLLInitTypeDef PLLInit = {0};
-  // DSI_HOST_TimeoutTypeDef HostTimeouts = {0};
-  // DSI_PHY_TimerTypeDef PhyTimings = {0};
   DSI_VidCfgTypeDef VidCfg = {0};
-
   LTDC_LayerCfgTypeDef pLayerCfg = {0};
 
   object_temp=object;
-  object->pend_buffer=-1;
 
   __HAL_RCC_LTDC_CLK_ENABLE();
 
   /** @brief Toggle Sw reset of LTDC IP */
   __HAL_RCC_LTDC_FORCE_RESET();
   __HAL_RCC_LTDC_RELEASE_RESET();
-
-  /** @brief Enable the DMA2D clock */
-  __HAL_RCC_DMA2D_CLK_ENABLE();
-
-  /** @brief Toggle Sw reset of DMA2D IP */
-  __HAL_RCC_DMA2D_FORCE_RESET();
-  __HAL_RCC_DMA2D_RELEASE_RESET();
 
   /** @brief Enable DSI Host and wrapper clocks */
   __HAL_RCC_DSI_CLK_ENABLE();
@@ -58,17 +47,18 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   __HAL_RCC_DSI_FORCE_RESET();
   __HAL_RCC_DSI_RELEASE_RESET();
 
-  //  DMA2D Init
-
-  // object->hdma2d.Instance=DMA2D;
-  // object->hdma2d.Init.Mode = DMA2D_M2M;
-  // object->hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB888;
-  // object->hdma2d.Init.OutputOffset = 0;
-  // if (HAL_DMA2D_Init(&object->hdma2d) != HAL_OK)
-  // {
-  //   Error_Handler(__FILE__, __LINE__);
-  // }
-
+  object->hdma2d.Instance=DMA2D;
+  object->hdma2d.Init.Mode = DMA2D_R2M;
+  object->hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB888;
+  object->hdma2d.Init.OutputOffset = 0;
+  object->hdma2d.LayerCfg[1].InputOffset = 0;
+  object->hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_ARGB8888;
+  object->hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
+  object->hdma2d.LayerCfg[1].InputAlpha = 0;
+  if (HAL_DMA2D_Init(&object->hdma2d) != HAL_OK)
+  {
+    Error_Handler(__FILE__, __LINE__);
+  }
   //  DSI HOST Init
 
   HAL_GPIO_WritePin(GPIOG , GPIO_PIN_3 , GPIO_PIN_RESET);
@@ -87,31 +77,6 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   {
     Error_Handler(__FILE__, __LINE__);
   }
-  // HostTimeouts.TimeoutCkdiv = 1;
-  // HostTimeouts.HighSpeedTransmissionTimeout = 0;
-  // HostTimeouts.LowPowerReceptionTimeout = 0;
-  // HostTimeouts.HighSpeedReadTimeout = 0;
-  // HostTimeouts.LowPowerReadTimeout = 0;
-  // HostTimeouts.HighSpeedWriteTimeout = 0;
-  // HostTimeouts.HighSpeedWritePrespMode = DSI_HS_PM_DISABLE;
-  // HostTimeouts.LowPowerWriteTimeout = 0;
-  // HostTimeouts.BTATimeout = 0;
-  // if (HAL_DSI_ConfigHostTimeouts(&object->hdsi, &HostTimeouts) != HAL_OK)
-  // {
-  //   Error_Handler(__FILE__, __LINE__);
-  // }
-  // PhyTimings.ClockLaneHS2LPTime = 33;
-  // PhyTimings.ClockLaneLP2HSTime = 30;
-  // PhyTimings.DataLaneHS2LPTime = 11;
-  // PhyTimings.DataLaneLP2HSTime = 21;
-  // PhyTimings.DataLaneMaxReadTime = 0;
-  // PhyTimings.StopWaitTime = 7;
-  // if (HAL_DSI_ConfigPhyTimer(&object->hdsi, &PhyTimings) != HAL_OK)
-  // {
-  //   Error_Handler(__FILE__, __LINE__);
-  // }
-  
-
 
   VidCfg.VirtualChannelID = 0;
   VidCfg.ColorCoding = DSI_RGB888;
@@ -147,10 +112,6 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
     Error_Handler(__FILE__, __LINE__);
   }
 
-  // if (HAL_DSI_SetGenericVCID(&object->hdsi, 0) != HAL_OK)
-  // {
-  //   Error_Handler(__FILE__, __LINE__);
-  // }
   //  LTDC init
   object->hltdc.Instance = LTDC;
   object->hltdc.Init.HSPolarity = LTDC_HSPOLARITY_AL;
@@ -181,7 +142,7 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   pLayerCfg.WindowX1 = Xsize;
   pLayerCfg.WindowY0 = 0;
   pLayerCfg.WindowY1 = Ysize;
-  pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB888;
+  pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
   pLayerCfg.Alpha = 255;
   pLayerCfg.Alpha0 = 0;
   pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
@@ -196,32 +157,6 @@ void LTDC_DSI_object_Init(ltdc_dsi_objectTypeDef *object)
   {
     Error_Handler(__FILE__, __LINE__);
   }
-
-  // pLayerCfg.WindowX0 = 0;
-  // pLayerCfg.WindowX1 = Xsize;
-  // pLayerCfg.WindowY0 = 0;
-  // pLayerCfg.WindowY1 = Ysize;
-  // pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB888;
-  // pLayerCfg.Alpha = 255;
-  // pLayerCfg.Alpha0 = 0;
-  // pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
-  // pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
-  // pLayerCfg.FBStartAdress = LCD_FRAME_BUFFER_2;
-  // pLayerCfg.ImageWidth = Xsize;
-  // pLayerCfg.ImageHeight = Ysize;
-  // pLayerCfg.Backcolor.Blue = 0;
-  // pLayerCfg.Backcolor.Green = 0;
-  // pLayerCfg.Backcolor.Red = 0;
-  // if (HAL_LTDC_ConfigLayer(&object->hltdc, &pLayerCfg, 1) != HAL_OK)
-  // {
-  //   Error_Handler(__FILE__, __LINE__);
-  // }
-  // __HAL_DSI_WRAPPER_ENABLE(&object->hdsi);
-  /* USER CODE BEGIN LTDC_Init 2 */
-  
-  /* Configure DSI PHY HS2LP and LP2HS timings */
-    
-  
 
   object->dsi_IO_shortWrite=DSI_short_write;
   object->dsi_IO_longWrite=DSI_long_write;
@@ -292,12 +227,11 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* hltdc)
   /** Initializes the peripherals clock
   */
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
-    PeriphClkInitStruct.PLL3.PLL3M = 5;    
+    PeriphClkInitStruct.PLL3.PLL3M = 5;
     PeriphClkInitStruct.PLL3.PLL3N = 160;
-    PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
     PeriphClkInitStruct.PLL3.PLL3P = 2;
-    PeriphClkInitStruct.PLL3.PLL3Q = 2;  
-    PeriphClkInitStruct.PLL3.PLL3R = 19;
+    PeriphClkInitStruct.PLL3.PLL3Q = 2;
+    PeriphClkInitStruct.PLL3.PLL3R = 21;
     PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
     PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_2;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
@@ -392,28 +326,6 @@ void copy_buffer_R2M(ltdc_dsi_objectTypeDef *object,uint32_t *dst,uint16_t xsize
     }
   }   
 }
-
-// void HAL_DSI_TearingEffectCallback(DSI_HandleTypeDef* hdsi)
-// {
-
-// }
-
-// void HAL_DSI_EndOfRefreshCallback(DSI_HandleTypeDef *hdsi)
-// {
-//   // if(pend_buffer >= 0)
-//   // { 
-//   // /* Disable DSI Wrapper */
-//   //   __HAL_DSI_WRAPPER_DISABLE(hdsi);
-//   //   /* Update LTDC configuaration */
-//   //   LTDC_LAYER(hdsi, 0)->CFBAR = ((uint32_t)Buffers[pend_buffer]);
-//   //   __HAL_LTDC_RELOAD_CONFIG(&object_temp->hltdc);
-//   //   /* Enable DSI Wrapper */
-//   //   __HAL_DSI_WRAPPER_ENABLE(hdsi);
-    
-//   //   front_buffer = pend_buffer;  
-//   //   pend_buffer = -1;
-//   // }
-// }
 
 void DSI_short_write(ltdc_dsi_objectTypeDef *object,uint16_t chNbr, uint16_t reg, uint32_t data)
 {

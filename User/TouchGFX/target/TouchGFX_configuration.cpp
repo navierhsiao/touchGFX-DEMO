@@ -2,6 +2,7 @@
 #include <common/TouchGFXInit.hpp>
 #include <touchgfx/hal/BoardConfiguration.hpp>
 #include <platform/driver/lcd/LCD24bpp.hpp>
+#include <platform/driver/lcd/LCD32bpp.hpp>
 
 #include <stm32h7xx_hal.h>
 #include "../../../BSP/system.h"
@@ -16,13 +17,10 @@ extern "C" lcd_objectTypeDef lcd_obj;
 extern "C" void touchgfx_init();
 extern "C" void touchgfx_taskEntry();
 
-static uint32_t frameBuf0 = (uint32_t)(LCD_FRAME_BUFFER); //Beginning of SDRAM
-// static uint32_t frameBuf1 = (uint32_t)(LCD_FRAME_BUFFER_2);
-
 static TouchGFXDMA dma;
 static STM32TouchController tc;
 static STM32H7Instrumentation mcuInstr;
-static LCD24bpp lcd;
+static LCD32bpp lcd;
 static STM32H7HAL hal(dma, lcd, tc, 480, 854);
 
 void touchgfx_init()
