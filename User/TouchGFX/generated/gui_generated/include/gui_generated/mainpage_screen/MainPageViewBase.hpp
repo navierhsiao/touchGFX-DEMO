@@ -9,6 +9,7 @@
 #include <gui/mainpage_screen/MainPagePresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/containers/Container.hpp>
+#include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/containers/SwipeContainer.hpp>
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
@@ -32,14 +33,13 @@ protected:
     touchgfx::Box __background;
     touchgfx::Container container1;
     touchgfx::Box box2;
+    touchgfx::Image image1;
     touchgfx::SwipeContainer swipeContainer1;
     touchgfx::Container page2;
-    touchgfx::Box box4;
     touchgfx::ButtonWithLabel buttonWithLabel2;
     touchgfx::TextArea textArea1_1_1;
     touchgfx::TextArea textArea1_2;
     touchgfx::Container page1;
-    touchgfx::Box box3;
     touchgfx::ButtonWithLabel buttonWithLabel1;
     touchgfx::TextArea textArea1_1;
     touchgfx::TextArea textArea1;

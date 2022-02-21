@@ -26,29 +26,25 @@
                 "Moveable": false
               },
               {
+                "Type": "Image",
+                "RelativeFilename": "color_wheel_16443.png",
+                "Alpha": 46,
+                "Name": "image1",
+                "X": 112,
+                "Y": 299,
+                "Width": 256,
+                "Height": 256,
+                "Visible": true,
+                "LockPosition": false,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
                 "Components": [
                   {
                     "Components": [
-                      {
-                        "Type": "Box",
-                        "Color": {
-                          "Red": 98,
-                          "Green": 255,
-                          "Blue": 0
-                        },
-                        "Alpha": 255,
-                        "Name": "box4",
-                        "X": 162,
-                        "Y": 273,
-                        "Width": 157,
-                        "Height": 335,
-                        "Visible": true,
-                        "LockPosition": false,
-                        "Draggable": false,
-                        "Clickable": false,
-                        "Fadeable": false,
-                        "Moveable": false
-                      },
                       {
                         "Type": "ButtonWithLabel",
                         "Pressed": "__designer\\Dark_Buttons_Round_Edge_small_pressed.png",
@@ -84,9 +80,9 @@
                         "TextId": "SingleUseId11",
                         "TextRotation": "0",
                         "Color": {
-                          "Red": 130,
-                          "Green": 130,
-                          "Blue": 130
+                          "Red": 219,
+                          "Green": 219,
+                          "Blue": 219
                         },
                         "Alpha": 255,
                         "AutoSize": true,
@@ -108,9 +104,9 @@
                         "TextId": "SingleUseId12",
                         "TextRotation": "0",
                         "Color": {
-                          "Red": 130,
-                          "Green": 130,
-                          "Blue": 130
+                          "Red": 219,
+                          "Green": 219,
+                          "Blue": 219
                         },
                         "Alpha": 255,
                         "AutoSize": true,
@@ -145,26 +141,6 @@
                   {
                     "Components": [
                       {
-                        "Type": "Box",
-                        "Color": {
-                          "Red": 255,
-                          "Green": 0,
-                          "Blue": 0
-                        },
-                        "Alpha": 255,
-                        "Name": "box3",
-                        "X": 162,
-                        "Y": 273,
-                        "Width": 157,
-                        "Height": 335,
-                        "Visible": true,
-                        "LockPosition": false,
-                        "Draggable": false,
-                        "Clickable": false,
-                        "Fadeable": false,
-                        "Moveable": false
-                      },
-                      {
                         "Type": "ButtonWithLabel",
                         "Pressed": "__designer\\Dark_Buttons_Round_Edge_small_pressed.png",
                         "Released": "__designer\\Dark_Buttons_Round_Edge_small.png",
@@ -198,9 +174,9 @@
                         "TextId": "SingleUseId10",
                         "TextRotation": "0",
                         "Color": {
-                          "Red": 130,
-                          "Green": 130,
-                          "Blue": 130
+                          "Red": 219,
+                          "Green": 219,
+                          "Blue": 219
                         },
                         "Alpha": 255,
                         "AutoSize": true,
@@ -222,9 +198,9 @@
                         "TextId": "SingleUseId9",
                         "TextRotation": "0",
                         "Color": {
-                          "Red": 130,
-                          "Green": 130,
-                          "Blue": 130
+                          "Red": 219,
+                          "Green": 219,
+                          "Blue": 219
                         },
                         "Alpha": 255,
                         "AutoSize": true,
@@ -536,22 +512,6 @@
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId5",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId6",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId7",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId8",
-        "IsResource": false
-      },
-      {
         "TextEntryId": "SingleUseId3",
         "IsResource": false
       },
@@ -573,6 +533,22 @@
       },
       {
         "TextEntryId": "SingleUseId9",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId5",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId6",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId7",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId8",
         "IsResource": false
       }
     ],

@@ -15,7 +15,7 @@ void STM32H7HAL::initialize()
 {
     HAL::initialize();
     registerEventListener(*(Application::getInstance()));
-    //buffer2=0xD0000000+480*854*3(bitsize of RGB888=3)
+    //buffer2=0xD0000000+480*854*4(bitsize of ARGB888=4)
     //anim buffer=buffer2+single buffersize
     setFrameBufferStartAddresses((void*)0xD0000000, (void*)0xD0190500, (void*)0xD0320A00);
     /*

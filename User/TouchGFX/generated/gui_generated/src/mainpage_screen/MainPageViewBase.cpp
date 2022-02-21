@@ -18,6 +18,11 @@ MainPageViewBase::MainPageViewBase()
     box2.setColor(touchgfx::Color::getColorFromRGB(28, 25, 25));
     container1.add(box2);
 
+    image1.setXY(112, 299);
+    image1.setBitmap(touchgfx::Bitmap(BITMAP_COLOR_WHEEL_16443_ID));
+    image1.setAlpha(46);
+    container1.add(image1);
+
     swipeContainer1.setXY(0, 0);
     swipeContainer1.setPageIndicatorBitmaps(touchgfx::Bitmap(BITMAP_DARK_PAGEINDICATOR_DOT_INDICATOR_SMALL_NORMAL_ID), touchgfx::Bitmap(BITMAP_DARK_PAGEINDICATOR_DOT_INDICATOR_SMALL_HIGHLIGHT_ID));
     swipeContainer1.setPageIndicatorXY(0, 0);
@@ -27,10 +32,6 @@ MainPageViewBase::MainPageViewBase()
     page2.setWidth(480);
     page2.setHeight(854);
 
-    box4.setPosition(162, 273, 157, 335);
-    box4.setColor(touchgfx::Color::getColorFromRGB(98, 255, 0));
-    page2.add(box4);
-
     buttonWithLabel2.setXY(155, 653);
     buttonWithLabel2.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
     buttonWithLabel2.setLabelText(touchgfx::TypedText(T_SINGLEUSEID3));
@@ -39,13 +40,13 @@ MainPageViewBase::MainPageViewBase()
     page2.add(buttonWithLabel2);
 
     textArea1_1_1.setXY(206, 210);
-    textArea1_1_1.setColor(touchgfx::Color::getColorFromRGB(130, 130, 130));
+    textArea1_1_1.setColor(touchgfx::Color::getColorFromRGB(219, 219, 219));
     textArea1_1_1.setLinespacing(0);
     textArea1_1_1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID11));
     page2.add(textArea1_1_1);
 
     textArea1_2.setXY(162, 149);
-    textArea1_2.setColor(touchgfx::Color::getColorFromRGB(130, 130, 130));
+    textArea1_2.setColor(touchgfx::Color::getColorFromRGB(219, 219, 219));
     textArea1_2.setLinespacing(0);
     textArea1_2.setTypedText(touchgfx::TypedText(T_SINGLEUSEID12));
     page2.add(textArea1_2);
@@ -53,10 +54,6 @@ MainPageViewBase::MainPageViewBase()
 
     page1.setWidth(480);
     page1.setHeight(854);
-
-    box3.setPosition(162, 273, 157, 335);
-    box3.setColor(touchgfx::Color::getColorFromRGB(255, 0, 0));
-    page1.add(box3);
 
     buttonWithLabel1.setXY(155, 653);
     buttonWithLabel1.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
@@ -66,13 +63,13 @@ MainPageViewBase::MainPageViewBase()
     page1.add(buttonWithLabel1);
 
     textArea1_1.setXY(206, 210);
-    textArea1_1.setColor(touchgfx::Color::getColorFromRGB(130, 130, 130));
+    textArea1_1.setColor(touchgfx::Color::getColorFromRGB(219, 219, 219));
     textArea1_1.setLinespacing(0);
     textArea1_1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID10));
     page1.add(textArea1_1);
 
     textArea1.setXY(162, 149);
-    textArea1.setColor(touchgfx::Color::getColorFromRGB(130, 130, 130));
+    textArea1.setColor(touchgfx::Color::getColorFromRGB(219, 219, 219));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID9));
     page1.add(textArea1);
