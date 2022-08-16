@@ -27,7 +27,6 @@ void TouchGFX_Task(void *argument);
 int main(void)
 {
   Hardware_Init();
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
   touchgfx_init();
 
   osKernelInitialize();

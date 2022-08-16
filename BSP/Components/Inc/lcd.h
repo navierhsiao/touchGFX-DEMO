@@ -2,6 +2,7 @@
 #define __LCD_H
 
 #include "../../Hardware/Inc/ltdc_dsi.h"
+#include "../../Hardware/Inc/tim_pwm.h"
 #include "Fonts/fonts.h"
 
 //color code
@@ -40,10 +41,12 @@ enum DISPLAY_STATE
 typedef struct lcd_structDef
 {
   ltdc_dsi_objectTypeDef  dsi_object;
+  pwm_tim_objectTypeDef   tim_object;
   uint32_t                colorCode;
   uint32_t                orientation;
   uint32_t                brightness;
   uint32_t                ID;
+
   void (*lcd_write_reg_short) (struct lcd_structDef *object,uint16_t reg, uint32_t data);
   void (*lcd_write_reg_long)  (struct lcd_structDef *object,uint16_t reg, uint8_t *data, uint16_t length);
   void (*lcd_read_reg)        (struct lcd_structDef *object,uint16_t reg, uint8_t *data, uint16_t length);
@@ -51,6 +54,7 @@ typedef struct lcd_structDef
   void (*lcd_draw_line)       (struct lcd_structDef *object,uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint32_t color);
   void (*lcd_draw_rect)       (struct lcd_structDef *object,uint16_t x,uint16_t y,uint16_t xsize,uint16_t ysize,uint32_t color);
   void (*lcd_showString)      (struct lcd_structDef *object,uint16_t x,uint16_t y,sFONT *fonts,uint32_t color,const char *string,...);
+  void (*lcd_set_backLight)   (struct lcd_structDef *object,uint16_t light);
 }lcd_objectTypeDef;
 
 enum LCD_STATE{

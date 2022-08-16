@@ -17,10 +17,16 @@
 #include "Hardware/Inc/qspi.h"
 #include "Hardware/Inc/sdram.h"
 #include "Hardware/Inc/uart.h"
+#include "Hardware/Inc/tim_pwm.h"
 
-#define LED1_TOGGLE HAL_GPIO_TogglePin(GPIOI,GPIO_PIN_12)
+
+#define AC_OK   HAL_GPIO_ReadPin(GPIOD,GPIO_PIN_7);
+#define CHG_OK  HAL_GPIO_ReadPin(GPIOG,GPIO_PIN_11);
+#define PBTN    HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_8);
 
 void Hardware_Init(void);
+void turn_off_device();
+void get_power_on_switch_State();
 void Error_Handler(char *file, uint32_t line);
 
 #endif
